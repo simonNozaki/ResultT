@@ -43,11 +43,11 @@ describe('Result test', () => {
     });
 
     it('should handle error', () => {
-      const result: Result<UnitTestingResponse, string> =
+      const result: Result<UnitTestingResponse, unknown> =
       Result.runCatching(() => {
-        new UnitTestingErrorService().execute('unittest');
+        return new UnitTestingErrorService().execute('unittest');
       })
-          .onFailure('runtimeexception', (it) => {
+          .onFailure('runtimeexception', (it: Error) => {
             console.log(this);
             throw it;
           });
