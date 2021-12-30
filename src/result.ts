@@ -8,6 +8,8 @@ import {List} from 'immutable';
  * This class may express the context for a runtime and its result. <br>
  * Highly inspired by Kotlin Result/runCatching.
  *
+ * @param {T} T Type parameter for main value.
+ * @param {E} E Type parameter for error value.
  * @see usage ... test/appliation/result-test.ts
  */
 export class Result<T, E> {
@@ -29,7 +31,6 @@ export class Result<T, E> {
   constructor(value: T)
   constructor(errors: string[])
   /**
-   *
    * @param {T} value
    * @param {E[]} errors
    */
@@ -66,8 +67,9 @@ export class Result<T, E> {
   }
 
   /**
-   * @param {E} message
-   * @param {()} consumer
+   * Set action on failure.
+   * @param {E} message custom message value on failure if want.
+   * @param {()} consumer action on failure.
    * @return {Result<T, E>}
    */
   onFailure(message?: E, consumer?: (it?: Error) => void): Result<T, E> {
@@ -99,9 +101,9 @@ export class Result<T, E> {
   /**
    * Map the value of this result to another instance typed R.
    * If this function cannot return another instance, throw Error.
-   * @param {()} onSuccess higher kinded function for succesing
-   * @param {()} onFailure higher kinded function for failing
-   * @param {R} R Type parameter foled to
+   * @param {function} onSuccess higher kinded function for succesing
+   * @param {function} onFailure higher kinded function for failing
+   * @param {R} R Type parameter folded to
    * @return {R}
    */
   fold<R>(
@@ -121,7 +123,7 @@ export class Result<T, E> {
 
   /**
    * Map the result to another result, transforming by the argument.
-   * @param {()} transform
+   * @param {function} transform callback function for mapping another Result.
    * @return {Result<R, E>}
    */
   map<R>(transform: (arg?: T) => R): Result<R, E> {
@@ -139,8 +141,9 @@ export class Result<T, E> {
   }
 
   /**
-   * Get a value of this result or throw error if not
-   * @param {Error} e
+   * Get a value of this result or throw error if not.
+   * @param {Error} e Some Error if want.
+   * No parameter passed throw default Error.
    * @return {T}
    */
   getOrThrow(e?: Error): T {
@@ -180,7 +183,7 @@ export class Result<T, E> {
    * Force the first type parameter type of Error
    * when the action result catch Error.
    * @param {()} supplier function to be called
-   * @return {Result<any, any>}
+   * @return {Result<any, any>} The result of execution in argument supplier.
    */
   static runCatching<T, E>(supplier: () => T): Result<T, E> {
     try {

@@ -1,6 +1,6 @@
-[type-result](README.md) / Exports
+[resultt](README.md) / Exports
 
-# type-result
+# resultt
 
 ## Table of contents
 

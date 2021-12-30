@@ -1,5 +1,5 @@
 {
-  "name": "result-typescript",
+  "name": "resultt",
   "version": "1.0.0",
   "description": "Type-safe runtime wrapping library",
   "typings": "dist/src/index.d.ts",
