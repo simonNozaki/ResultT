@@ -1,6 +1,6 @@
 {
   "name": "resultt",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Type-safe runtime wrapping library",
   "typings": "dist/src/index.d.ts",
   "main": "src/index.ts",
@@ -16,8 +16,6 @@
   "license": "MIT",
   "dependencies": {
     "@types/jest": "^27.0.3",
-    "@types/moment-timezone": "^0.5.30",
-    "@types/uuid": "^8.3.3",
     "fp-ts": "^2.11.5",
     "immutable": "^4.0.0",
     "jest": "^27.4.5",
