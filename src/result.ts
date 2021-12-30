@@ -9,7 +9,6 @@ import {List} from 'immutable';
  * Highly inspired by Kotlin Result/runCatching.
  *
  * @see usage ... test/appliation/result-test.ts
- * @see {@link https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/}
  */
 export class Result<T, E> {
   /** error message or strings */
@@ -55,7 +54,7 @@ export class Result<T, E> {
    * @return {boolean}
    */
   isFailure(): boolean {
-    return this instanceof Result.Failure;
+    return this instanceof Failure;
   }
 
   /**
@@ -79,7 +78,7 @@ export class Result<T, E> {
       this._errors.push(message);
     }
     // call argument consumer with the error of Failure instance
-    if (consumer && this.isError(this._value)) {
+    if (consumer && isError(this._value)) {
       consumer(this._value);
     }
     return this;
@@ -114,7 +113,7 @@ export class Result<T, E> {
         return onSuccess(this._value.value);
       }
     }
-    if (option.isSome(this._value) && this.isError(this._value.value)) {
+    if (option.isSome(this._value) && isError(this._value.value)) {
       return onFailure(this._value.value);
     }
     throw new Error(this.DEFAULT_ERROR_MESSAGE);
@@ -125,15 +124,16 @@ export class Result<T, E> {
    * @param {()} transform
    * @return {Result<R, E>}
    */
-  map<R>(transform: (arg?: T) => R): Result<any, E> {
+  map<R>(transform: (arg?: T) => R): Result<R, E> {
     if (this.isSuccess()) {
       if (option.isSome(this._value)) {
         return new Result<R, E>(transform(this._value.value));
       }
       return new Result<R, E>(transform());
     }
-    if (option.isSome(this._value) && this.isError(this._value.value)) {
-      return new Result.Failure<E>(this._value.value);
+    if (option.isSome(this._value) && isError(this._value.value)) {
+      const v: unknown = this._value.value as unknown;
+      return new Failure<R, E>(v as R);
     }
     throw new Error(this.DEFAULT_ERROR_MESSAGE);
   }
@@ -169,37 +169,10 @@ export class Result<T, E> {
    * @return {void}
    */
   private throwOnFailure(): void {
-    if (this.isError(this._value)) {
+    if (isError(this._value)) {
       // _value should have an error instance
       throw this._value;
     }
-  }
-
-  /**
-   * Result of failure. This class is instanciated on catching an error
-   */
-  private static Failure = class <E> extends Result<Error, E> {
-    /**
-     * @param {Error} _error
-     */
-    constructor(private _error: Error) {
-      super(_error);
-    }
-    /**
-     * @return {Error}
-     */
-    get error(): Error {
-      return this._error;
-    }
-  };
-
-  /**
-   * Check and force compiler to identify value as Error instance
-   * @param {()} arg
-   * @return {boolean}
-   */
-  private isError(arg: unknown): arg is Error {
-    return typeof arg === 'object' && 'name' in arg && 'message' in arg;
   }
 
   /**
@@ -209,11 +182,36 @@ export class Result<T, E> {
    * @param {()} supplier function to be called
    * @return {Result<any, any>}
    */
-  static runCatching<T, E>(supplier: () => T): Result<any, any> {
+  static runCatching<T, E>(supplier: () => T): Result<T, E> {
     try {
       return new Result<T, E>(supplier());
     } catch (e) {
-      return new Result.Failure<E>(e);
+      return new Failure<T, E>(e);
     }
+  }
+}
+
+const isError = (arg: unknown): arg is Error => {
+  return typeof arg === 'object' && 'name' in arg && 'message' in arg;
+};
+
+/**
+ * Result of failure. This class is instanciated on catching an error
+ */
+class Failure<T, E> extends Result<T, E> {
+  /**
+   * @param {Error} _error
+   */
+  constructor(private _error: T) {
+    super(_error);
+    if (!isError(_error)) {
+      throw new Error('Failure must have the value of Error.');
+    }
+  }
+  /**
+   * @return {Error}
+   */
+  get error(): T {
+    return this._error;
   }
 }
