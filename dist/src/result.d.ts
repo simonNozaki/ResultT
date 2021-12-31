@@ -13,11 +13,10 @@ export declare class Result<T, E> {
     onFailure(message?: E, consumer?: (it?: Error) => void): Result<T, E>;
     onSuccess(consumer: (arg: T) => void): Result<T, E>;
     fold<R>(onSuccess: (value?: T, errors?: E[]) => R, onFailure: (earg?: Error) => R): R;
-    map<R>(transform: (arg?: T) => R): Result<any, E>;
+    map<R>(transform: (arg?: T) => R): Result<R, E>;
     getOrThrow(e?: Error): T;
-    getOrElse(elseValue: T): T;
+    getOrDefault(elseValue: T): T;
+    getOrElse<R>(onFailure: (earg?: Error) => R): R;
     private throwOnFailure;
-    private static Failure;
-    private isError;
-    static runCatching<T, E>(supplier: () => T): Result<any, any>;
+    static runCatching<T, E>(supplier: () => T): Result<T, E>;
 }
