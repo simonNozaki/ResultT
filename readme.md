@@ -80,3 +80,6 @@ const folded: number = Result.runCatching(() => {
 ## For more info...
 Full class documentation is here: [docs](./docs/classes/Result.md)
 
+
+# Releases
+- 2021-12-31 : v1.0.3 ... Add `getOrElse` method and its tests.
