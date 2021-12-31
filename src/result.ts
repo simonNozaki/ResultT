@@ -1,6 +1,6 @@
 /* eslint-disable new-cap */
 import {option} from 'fp-ts';
-import {none, Option} from 'fp-ts/lib/Option';
+import {none, Option, getOrElse} from 'fp-ts/lib/Option';
 import {List} from 'immutable';
 
 /**
@@ -161,7 +161,7 @@ export class Result<T, E> {
    * @param {T} elseValue
    * @return {T}
    */
-  getOrElse(elseValue: T): T {
+  getOrDefault(elseValue: T): T {
     if (this.isSuccess() && option.isSome(this._value)) {
       return this._value.value;
     }
@@ -169,11 +169,28 @@ export class Result<T, E> {
   }
 
   /**
+   * Get the value of type R by applying action.
+   * Shorthand for the method `fold`.
+   * @param {function} onFailure the action on failure
+   * @return {R}
+   */
+  getOrElse<R>(onFailure: (earg?: Error) => R): R {
+    return this.fold(
+        () => {
+          return getOrElse(() => null)(this._value);
+        },
+        () => {
+          const e: unknown = this._value as unknown;
+          return onFailure(e as Error);
+        },
+    );
+  }
+
+  /**
    * @return {void}
    */
   private throwOnFailure(): void {
     if (isError(this._value)) {
-      // _value should have an error instance
       throw this._value;
     }
   }
