@@ -124,4 +124,30 @@ describe('Result test', () => {
             expect(it).toBe(8);
           });
     });
+
+    it('should get value successfully', () => {
+      const r: UnitTestingResponse = Result.runCatching(() => {
+        return new UnitTestingService().execute('unittest');
+      })
+          .getOrElse((it: Error) => {
+            console.log(it);
+            return {
+              data: 'NONE',
+            };
+          });
+      expect(r.data).toBe('unittest');
+    });
+
+    it('should get value by failure action', () => {
+      const r: UnitTestingResponse = Result.runCatching(() => {
+        return new UnitTestingErrorService().execute('unittest');
+      })
+          .getOrElse((it: Error) => {
+            console.log(it);
+            return {
+              data: 'default',
+            };
+          });
+      expect(r.data).toBe('default');
+    });
 });
