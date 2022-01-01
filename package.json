@@ -10,24 +10,24 @@
   "scripts": {
     "docs": "npx typedoc --out docs src",
     "assemble": "npx tsc",
-    "build": "npm run docs && npm run assemble"
+    "build": "npx jest && npm run docs && npm run assemble"
   },
   "author": "tldk1993@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "@types/jest": "^27.0.3",
     "fp-ts": "^2.11.5",
-    "immutable": "^4.0.0",
-    "jest": "^27.4.5",
-    "ts-jest": "^27.1.2",
-    "typescript": "^4.5.4"
+    "immutable": "^4.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^27.4.0",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
     "eslint": "^8.5.0",
     "eslint-config-google": "^0.14.0",
+    "jest": "^27.4.5",
+    "ts-jest": "^27.1.2",
     "typedoc": "^0.22.10",
-    "typedoc-plugin-markdown": "^3.11.8"
+    "typedoc-plugin-markdown": "^3.11.8",
+    "typescript": "^4.5.4"
   }
 }
