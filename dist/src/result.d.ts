@@ -15,7 +15,8 @@ export declare class Result<T, E> {
     fold<R>(onSuccess: (value?: T, errors?: E[]) => R, onFailure: (earg?: Error) => R): R;
     map<R>(transform: (arg?: T) => R): Result<R, E>;
     getOrThrow(e?: Error): T;
-    getOrElse(elseValue: T): T;
+    getOrDefault(elseValue: T): T;
+    getOrElse<R>(onFailure: (earg?: Error) => R): R;
     private throwOnFailure;
     static runCatching<T, E>(supplier: () => T): Result<T, E>;
 }

@@ -93,5 +93,29 @@ describe('Result test', function () {
             expect(it).toBe(8);
         });
     });
+    it('should get value successfully', function () {
+        var r = result_1.Result.runCatching(function () {
+            return new UnitTestingService().execute('unittest');
+        })
+            .getOrElse(function (it) {
+            console.log(it);
+            return {
+                data: 'NONE',
+            };
+        });
+        expect(r.data).toBe('unittest');
+    });
+    it('should get value by failure action', function () {
+        var r = result_1.Result.runCatching(function () {
+            return new UnitTestingErrorService().execute('unittest');
+        })
+            .getOrElse(function (it) {
+            console.log(it);
+            return {
+                data: 'default',
+            };
+        });
+        expect(r.data).toBe('default');
+    });
 });
 //# sourceMappingURL=result-tests.js.map

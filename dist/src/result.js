@@ -93,11 +93,20 @@ var Result = (function () {
         }
         this.throwOnFailure();
     };
-    Result.prototype.getOrElse = function (elseValue) {
+    Result.prototype.getOrDefault = function (elseValue) {
         if (this.isSuccess() && fp_ts_1.option.isSome(this._value)) {
             return this._value.value;
         }
         return elseValue;
+    };
+    Result.prototype.getOrElse = function (onFailure) {
+        var _this = this;
+        return this.fold(function () {
+            return (0, Option_1.getOrElse)(function () { return null; })(_this._value);
+        }, function () {
+            var e = _this._value;
+            return onFailure(e);
+        });
     };
     Result.prototype.throwOnFailure = function () {
         if (isError(this._value)) {
