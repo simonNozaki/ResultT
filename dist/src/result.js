@@ -37,7 +37,7 @@ var Result = (function () {
         return this;
     };
     Result.prototype.isFailure = function () {
-        return this instanceof Result.Failure;
+        return this instanceof Failure;
     };
     Result.prototype.isSuccess = function () {
         return !this.isFailure();
@@ -49,7 +49,7 @@ var Result = (function () {
         if (message) {
             this._errors.push(message);
         }
-        if (consumer && this.isError(this._value)) {
+        if (consumer && isError(this._value)) {
             consumer(this._value);
         }
         return this;
@@ -66,7 +66,7 @@ var Result = (function () {
                 return onSuccess(this._value.value);
             }
         }
-        if (fp_ts_1.option.isSome(this._value) && this.isError(this._value.value)) {
+        if (fp_ts_1.option.isSome(this._value) && isError(this._value.value)) {
             return onFailure(this._value.value);
         }
         throw new Error(this.DEFAULT_ERROR_MESSAGE);
@@ -78,8 +78,9 @@ var Result = (function () {
             }
             return new Result(transform());
         }
-        if (fp_ts_1.option.isSome(this._value) && this.isError(this._value.value)) {
-            return new Result.Failure(this._value.value);
+        if (fp_ts_1.option.isSome(this._value) && isError(this._value.value)) {
+            var v = this._value.value;
+            return new Failure(v);
         }
         throw new Error(this.DEFAULT_ERROR_MESSAGE);
     };
@@ -99,38 +100,41 @@ var Result = (function () {
         return elseValue;
     };
     Result.prototype.throwOnFailure = function () {
-        if (this.isError(this._value)) {
+        if (isError(this._value)) {
             throw this._value;
         }
-    };
-    Result.prototype.isError = function (arg) {
-        return typeof arg === 'object' && 'name' in arg && 'message' in arg;
     };
     Result.runCatching = function (supplier) {
         try {
             return new Result(supplier());
         }
         catch (e) {
-            return new Result.Failure(e);
+            return new Failure(e);
         }
     };
-    Result.Failure = (function (_super) {
-        __extends(class_1, _super);
-        function class_1(_error) {
-            var _this = _super.call(this, _error) || this;
-            _this._error = _error;
-            return _this;
-        }
-        Object.defineProperty(class_1.prototype, "error", {
-            get: function () {
-                return this._error;
-            },
-            enumerable: false,
-            configurable: true
-        });
-        return class_1;
-    }(Result));
     return Result;
 }());
 exports.Result = Result;
+var isError = function (arg) {
+    return typeof arg === 'object' && 'name' in arg && 'message' in arg;
+};
+var Failure = (function (_super) {
+    __extends(Failure, _super);
+    function Failure(_error) {
+        var _this = _super.call(this, _error) || this;
+        _this._error = _error;
+        if (!isError(_error)) {
+            throw new Error('Failure must have the value of Error.');
+        }
+        return _this;
+    }
+    Object.defineProperty(Failure.prototype, "error", {
+        get: function () {
+            return this._error;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return Failure;
+}(Result));
 //# sourceMappingURL=result.js.map

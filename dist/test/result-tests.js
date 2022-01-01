@@ -30,7 +30,7 @@ describe('Result test', function () {
     });
     it('should handle error', function () {
         var result = result_1.Result.runCatching(function () {
-            new UnitTestingErrorService().execute('unittest');
+            return new UnitTestingErrorService().execute('unittest');
         })
             .onFailure('runtimeexception', function (it) {
             console.log(_this);
