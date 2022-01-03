@@ -2,12 +2,12 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node
+      - image: node:14-alpine3.12
     steps:
       - checkout
       - run:
           name: update-npm
-          command: 'sudo npm install -g npm@5'
+          command: 'sudo npm install -g npm@6'
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
