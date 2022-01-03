@@ -30,6 +30,14 @@ describe('Result test', () => {
       }
     }
 
+    it('can create with factory method', () => {
+      const errors: string[] = ['Value is null'];
+      const r: Result<Error, string> = Result.errorsOf(errors);
+
+      expect(r.isFailure()).toBe(true);
+      expect(r.errors.get(0)).toBe('Value is null');
+    });
+
     it('should call lambda on sucessed', () => {
       const result: Result<UnitTestingResponse, unknown> =
       Result.runCatching(() => {
@@ -59,7 +67,7 @@ describe('Result test', () => {
 
     it('can instantiate Result directly', () => {
       const res = new UnitTestingService().execute('unittest');
-      const result = new Result(res);
+      const result = Result.of(res);
 
       expect(result.getOrThrow()).toEqual({data: 'unittest'});
     });

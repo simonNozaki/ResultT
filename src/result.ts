@@ -21,22 +21,51 @@ export class Result<T, E> {
     'Unexpcted error be thrown on applying operator';
 
   /**
-     * Get errors as immutbale list
-     */
+   * Get errors as immutbale list. <br>
+   * Message is wrapped by immutbale list by Imuutable.
+   * @see {@link https://www.npmjs.com/package/immutable}
+   */
   get errors(): List<E> {
     return List(this._errors);
   }
 
-  constructor()
-  constructor(value: T)
-  constructor(errors: string[])
+  protected constructor()
+  protected constructor(value: T)
+  protected constructor(errors: E[])
+  protected constructor(value: T, errors: E[])
   /**
    * @param {T} value
    * @param {E[]} errors
    */
-  constructor(value?: T, errors?: E[]) {
+  protected constructor(value?: T, errors?: E[]) {
     this._value = value ? option.of(value) : none;
     this._errors = errors ? errors : [];
+  }
+
+  /**
+   * Factory method. _value or _errors must be needed.
+   * @param {T} _value
+   * @param {E[]} _errors
+   * @return {Result<T, E>}
+   */
+  static of<T, E>(_value: T, _errors?: E[]): Result<T, E> {
+    return new Result<T, E>(_value, _errors);
+  }
+
+  /**
+   * Factory method. _value or _errors must be needed. <br>
+   * This instance mark as error, so result#isFailure is to be true.
+   * @param {E[]} _errors
+   * @return {Result<T, E>}
+   */
+  static errorsOf<T extends Error, E>(_errors: E[]): Failure<T, E> {
+    const e: unknown = new Error('Marked as error');
+    const es: E[] = Array.from<E>(_errors);
+    const failure = new Failure<T, E>(e as T);
+    es.forEach((_e) => {
+      failure.addError(_e);
+    });
+    return failure;
   }
 
   /**
