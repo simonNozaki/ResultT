@@ -32,6 +32,18 @@ var Result = (function () {
         enumerable: false,
         configurable: true
     });
+    Result.of = function (_value, _errors) {
+        return new Result(_value, _errors);
+    };
+    Result.errorsOf = function (_errors) {
+        var e = new Error('Marked as error');
+        var es = Array.from(_errors);
+        var failure = new Failure(e);
+        es.forEach(function (_e) {
+            failure.addError(_e);
+        });
+        return failure;
+    };
     Result.prototype.addError = function (message) {
         this._errors.push(message);
         return this;

@@ -4,9 +4,12 @@ export declare class Result<T, E> {
     private readonly _value;
     private readonly DEFAULT_ERROR_MESSAGE;
     get errors(): List<E>;
-    constructor();
-    constructor(value: T);
-    constructor(errors: string[]);
+    protected constructor();
+    protected constructor(value: T);
+    protected constructor(errors: E[]);
+    protected constructor(value: T, errors: E[]);
+    static of<T, E>(_value: T, _errors?: E[]): Result<T, E>;
+    static errorsOf<T extends Error, E>(_errors: E[]): Failure<T, E>;
     addError(message: E): Result<T, E>;
     isFailure(): boolean;
     isSuccess(): boolean;
@@ -20,3 +23,9 @@ export declare class Result<T, E> {
     private throwOnFailure;
     static runCatching<T, E>(supplier: () => T): Result<T, E>;
 }
+declare class Failure<T, E> extends Result<T, E> {
+    private _error;
+    constructor(_error: T);
+    get error(): T;
+}
+export {};

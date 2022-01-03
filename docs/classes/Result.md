@@ -44,13 +44,15 @@ Highly inspired by Kotlin Result/runCatching.
 - [onFailure](Result.md#onfailure)
 - [onSuccess](Result.md#onsuccess)
 - [throwOnFailure](Result.md#throwonfailure)
+- [errorsOf](Result.md#errorsof)
+- [of](Result.md#of)
 - [runCatching](Result.md#runcatching)
 
 ## Constructors
 
 ### constructor
 
-• **new Result**<`T`, `E`\>()
+• `Protected` **new Result**<`T`, `E`\>()
 
 #### Type parameters
 
@@ -61,9 +63,9 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:30](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L30)
+[result.ts:32](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L32)
 
-• **new Result**<`T`, `E`\>(`value`)
+• `Protected` **new Result**<`T`, `E`\>(`value`)
 
 #### Type parameters
 
@@ -80,9 +82,9 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:31](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L31)
+[result.ts:33](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L33)
 
-• **new Result**<`T`, `E`\>(`errors`)
+• `Protected` **new Result**<`T`, `E`\>(`errors`)
 
 #### Type parameters
 
@@ -95,11 +97,31 @@ Highly inspired by Kotlin Result/runCatching.
 
 | Name | Type |
 | :------ | :------ |
-| `errors` | `string`[] |
+| `errors` | `E`[] |
 
 #### Defined in
 
-[result.ts:32](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L32)
+[result.ts:34](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L34)
+
+• `Protected` **new Result**<`T`, `E`\>(`value`, `errors`)
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `T` |
+| `errors` | `E`[] |
+
+#### Defined in
+
+[result.ts:35](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L35)
 
 ## Properties
 
@@ -109,7 +131,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:20](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L20)
+[result.ts:20](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L20)
 
 ___
 
@@ -121,7 +143,7 @@ error message or strings
 
 #### Defined in
 
-[result.ts:17](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L17)
+[result.ts:17](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L17)
 
 ___
 
@@ -133,7 +155,7 @@ Successed data of this object
 
 #### Defined in
 
-[result.ts:19](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L19)
+[result.ts:19](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L19)
 
 ## Accessors
 
@@ -141,7 +163,10 @@ Successed data of this object
 
 • `get` **errors**(): `List`<`E`\>
 
-Get errors as immutbale list
+Get errors as immutbale list. <br>
+Message is wrapped by immutbale list by Imuutable.
+
+**`see`** [https://www.npmjs.com/package/immutable](https://www.npmjs.com/package/immutable)
 
 #### Returns
 
@@ -149,7 +174,7 @@ Get errors as immutbale list
 
 #### Defined in
 
-[result.ts:26](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L26)
+[result.ts:28](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L28)
 
 ## Methods
 
@@ -172,7 +197,7 @@ This makes caller set an error message only through this method.
 
 #### Defined in
 
-[result.ts:48](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L48)
+[result.ts:77](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L77)
 
 ___
 
@@ -202,7 +227,7 @@ If this function cannot return another instance, throw Error.
 
 #### Defined in
 
-[result.ts:109](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L109)
+[result.ts:138](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L138)
 
 ___
 
@@ -224,7 +249,7 @@ Get the value of this result or default value in argument
 
 #### Defined in
 
-[result.ts:164](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L164)
+[result.ts:193](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L193)
 
 ___
 
@@ -253,7 +278,7 @@ Shorthand for the method `fold`.
 
 #### Defined in
 
-[result.ts:177](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L177)
+[result.ts:206](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L206)
 
 ___
 
@@ -275,7 +300,7 @@ Get a value of this result or throw error if not.
 
 #### Defined in
 
-[result.ts:149](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L149)
+[result.ts:178](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L178)
 
 ___
 
@@ -291,7 +316,7 @@ Return true if the result was failed.
 
 #### Defined in
 
-[result.ts:57](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L57)
+[result.ts:86](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L86)
 
 ___
 
@@ -307,7 +332,7 @@ Return true if the result was successed.
 
 #### Defined in
 
-[result.ts:65](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L65)
+[result.ts:94](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L94)
 
 ___
 
@@ -335,7 +360,7 @@ Map the result to another result, transforming by the argument.
 
 #### Defined in
 
-[result.ts:129](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L129)
+[result.ts:158](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L158)
 
 ___
 
@@ -358,7 +383,7 @@ Set action on failure.
 
 #### Defined in
 
-[result.ts:75](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L75)
+[result.ts:104](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L104)
 
 ___
 
@@ -380,7 +405,7 @@ Set an additional action on successing
 
 #### Defined in
 
-[result.ts:94](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L94)
+[result.ts:123](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L123)
 
 ___
 
@@ -394,7 +419,67 @@ ___
 
 #### Defined in
 
-[result.ts:192](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L192)
+[result.ts:221](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L221)
+
+___
+
+### errorsOf
+
+▸ `Static` **errorsOf**<`T`, `E`\>(`_errors`): `Failure`<`T`, `E`\>
+
+Factory method. _value or _errors must be needed. <br>
+This instance mark as error, so result#isFailure is to be true.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Error` |
+| `E` | `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `_errors` | `E`[] |
+
+#### Returns
+
+`Failure`<`T`, `E`\>
+
+#### Defined in
+
+[result.ts:61](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L61)
+
+___
+
+### of
+
+▸ `Static` **of**<`T`, `E`\>(`_value`, `_errors?`): [`Result`](Result.md)<`T`, `E`\>
+
+Factory method. _value or _errors must be needed.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `E` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `_value` | `T` |
+| `_errors?` | `E`[] |
+
+#### Returns
+
+[`Result`](Result.md)<`T`, `E`\>
+
+#### Defined in
+
+[result.ts:51](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L51)
 
 ___
 
@@ -427,4 +512,4 @@ The result of execution in argument supplier.
 
 #### Defined in
 
-[result.ts:205](https://github.com/simonNozaki/ResultT/blob/f4e20d9/src/result.ts#L205)
+[result.ts:234](https://github.com/simonNozaki/ResultT/blob/de788d3/src/result.ts#L234)

@@ -19,6 +19,12 @@ describe('Result test', function () {
         };
         return UnitTestingErrorService;
     }());
+    it('can create with factory method', function () {
+        var errors = ['Value is null'];
+        var r = result_1.Result.errorsOf(errors);
+        expect(r.isFailure()).toBe(true);
+        expect(r.errors.get(0)).toBe('Value is null');
+    });
     it('should call lambda on sucessed', function () {
         var result = result_1.Result.runCatching(function () {
             return new UnitTestingService().execute('unittest');
@@ -42,7 +48,7 @@ describe('Result test', function () {
     });
     it('can instantiate Result directly', function () {
         var res = new UnitTestingService().execute('unittest');
-        var result = new result_1.Result(res);
+        var result = result_1.Result.of(res);
         expect(result.getOrThrow()).toEqual({ data: 'unittest' });
     });
     it('should fold with successing executing service class', function () {
