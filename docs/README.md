@@ -1,5 +1,7 @@
 resultt / [Exports](modules.md)
 
+[![CircleCI](https://circleci.com/gh/simonNozaki/ResultT/tree/main.svg?style=svg)](https://circleci.com/gh/simonNozaki/ResultT/tree/main)
+
 # ResultT
 ts/js users cannot use try-catch as expression so that we have to struggle with complicated runtimes.
 
@@ -25,10 +27,6 @@ interface Response {
     data: string
 }
 class Service {
-    /**
-     * @param {string} value
-     * @return {Response}
-     */
     execute(value: string): Response {
     return {data: value};
     }
@@ -51,7 +49,7 @@ const result: Result<Response, unknown> = Result.runCatching(() => {
 
 // You may get the value of execute by "get" functions as declarative.
 const v1 = result.getOrThrow();
-const v2 = result.getOrElse({
+const v2 = result.getOrDefault({
     data: 'OTHER'
 });
 
@@ -75,7 +73,20 @@ const folded: number = Result.runCatching(() => {
             return 0;
         },
     );
+
+// Or, shorthand for fold with getOrElse
+const n: number = Result.runCatching(() => {
+        return new Service().execute('execution');
+    })
+    .getOrElse((it: Error) => {
+            console.log(it);
+            return 0;
+        },
+    );
 ```
 
 ## For more info...
 Full class documentation is here: [docs](./docs/classes/Result.md)
+
+# Releases
+- 2021-12-31 : v1.0.3 ... Add `getOrElse` method and its tests.
