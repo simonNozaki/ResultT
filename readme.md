@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/simonNozaki/ResultT/tree/main.svg?style=svg)](https://circleci.com/gh/simonNozaki/ResultT/tree/main)
+
 # ResultT
 ts/js users cannot use try-catch as expression so that we have to struggle with complicated runtimes.
 
