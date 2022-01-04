@@ -12,6 +12,10 @@
     "assemble": "npx tsc",
     "build": "npx jest && npm run docs && npm run assemble"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonNozaki/ResultT.git"
+  },
   "author": "tldk1993@gmail.com",
   "license": "MIT",
   "dependencies": {
