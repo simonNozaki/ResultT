@@ -31,8 +31,8 @@ describe('Result test', () => {
     }
 
     it('should call lambda on sucessed', () => {
-      const result: Result<UnitTestingResponse, unknown> =
-      Result.runCatching(() => {
+      const result: Result<UnitTestingResponse, string> =
+      Result.runCatching<UnitTestingResponse, string>(() => {
         return new UnitTestingService().execute('unittest');
       })
           .onSuccess((v) => {
@@ -43,8 +43,8 @@ describe('Result test', () => {
     });
 
     it('should handle error', () => {
-      const result: Result<UnitTestingResponse, unknown> =
-      Result.runCatching(() => {
+      const result: Result<UnitTestingResponse, string> =
+      Result.runCatching<UnitTestingResponse, string>(() => {
         return new UnitTestingErrorService().execute('unittest');
       })
           .onFailure('runtimeexception', (it: Error) => {
