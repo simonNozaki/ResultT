@@ -47,7 +47,7 @@ const result: Result<Response, unknown> = Result.runCatching(() => {
     });
 
 // You may get the value of execute by "get" functions as declarative.
-const v1 = result.getOrThrow();
+const v1 = result.getOrThrow();  // => success ... { data: execution }
 const v2 = result.getOrDefault({
     data: 'OTHER'
 });
@@ -72,6 +72,7 @@ const folded: number = Result.runCatching(() => {
             return 0;
         },
     );
+console.log(folded);  // => 9
 
 // Or, shorthand for fold with getOrElse
 const n: number = Result.runCatching(() => {
@@ -82,12 +83,13 @@ const n: number = Result.runCatching(() => {
             return 0;
         },
     );
+console.log(n);  // => 9
 ```
 
 
 ## For more info...
-Full class documentation is here: [docs](./docs/classes/Result.md)
+Full class documentation is here: [docs](https://github.com/simonNozaki/ResultT/blob/main/docs/classes/Result.md)
 
 
 # Releases
-- 2021-12-31 : v1.0.3 ... Add `getOrElse` method and its tests.
+
