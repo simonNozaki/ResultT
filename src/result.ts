@@ -13,8 +13,6 @@ import {none, Option, getOrElse} from 'fp-ts/lib/Option';
 export class Resultt<T> {
   /** Successed data of this object */
   private readonly _value: Option<T>;
-  private readonly DEFAULT_ERROR_MESSAGE =
-    'Unexpcted error be thrown on applying operator';
 
   constructor()
   constructor(value: T)
@@ -90,7 +88,9 @@ export class Resultt<T> {
     if (option.isSome(this._value) && isError(this._value.value)) {
       return onFailure(this._value.value);
     }
-    throw new Error(this.DEFAULT_ERROR_MESSAGE);
+    throw new Error(
+        'Fold cannot apply for the value of this class because of None.',
+    );
   }
 
   /**
@@ -109,7 +109,7 @@ export class Resultt<T> {
       const v: unknown = this._value.value as unknown;
       return new Failure<R>(v as R);
     }
-    throw new Error(this.DEFAULT_ERROR_MESSAGE);
+    throw new Error('Map cannot apply for the value of this class');
   }
 
   /**
