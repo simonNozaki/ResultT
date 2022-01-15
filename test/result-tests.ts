@@ -1,4 +1,4 @@
-import {Result} from '../src/result';
+import {Resultt} from '../src/result';
 
 describe('Result test', () => {
     interface UnitTestingResponse {
@@ -31,8 +31,8 @@ describe('Result test', () => {
     }
 
     it('should call lambda on sucessed', () => {
-      const result: Result<UnitTestingResponse, string> =
-      Result.runCatching<UnitTestingResponse, string>(() => {
+      const result: Resultt<UnitTestingResponse> =
+      Resultt.runCatching<UnitTestingResponse>(() => {
         return new UnitTestingService().execute('unittest');
       })
           .onSuccess((v) => {
@@ -43,29 +43,27 @@ describe('Result test', () => {
     });
 
     it('should handle error', () => {
-      const result: Result<UnitTestingResponse, string> =
-      Result.runCatching<UnitTestingResponse, string>(() => {
+      const result: Resultt<UnitTestingResponse> =
+      Resultt.runCatching<UnitTestingResponse>(() => {
         return new UnitTestingErrorService().execute('unittest');
       })
-          .onFailure('runtimeexception', (it: Error) => {
+          .onFailure((it: Error) => {
             console.log(this);
             throw it;
           });
 
       expect(result.isFailure()).toBe(true);
-      expect(result.errors.size).toBe(1);
-      expect(result.errors.get(0)).toBe('runtimeexception');
     });
 
     it('can instantiate Result directly', () => {
       const res = new UnitTestingService().execute('unittest');
-      const result = new Result(res);
+      const result = new Resultt(res);
 
       expect(result.getOrThrow()).toEqual({data: 'unittest'});
     });
 
     it('should fold with successing executing service class', () => {
-      const count: number = Result.runCatching(() => {
+      const count: number = Resultt.runCatching(() => {
         return new UnitTestingService().execute('unittest');
       })
           .fold(
@@ -83,7 +81,7 @@ describe('Result test', () => {
     });
 
     it('should fold with successing executing error service class', () => {
-      const count: number = Result.runCatching(() => {
+      const count: number = Resultt.runCatching(() => {
         return new UnitTestingErrorService().execute('unittest');
       })
           .fold(
@@ -101,7 +99,7 @@ describe('Result test', () => {
     });
 
     it('should map result to another result on failure', () => {
-      Result.runCatching(() => {
+      Resultt.runCatching(() => {
         return new UnitTestingErrorService().execute('unittest');
       })
           .map((res: UnitTestingResponse) => {
@@ -114,7 +112,7 @@ describe('Result test', () => {
     });
 
     it('should map result to another result on success', () => {
-      Result.runCatching(() => {
+      Resultt.runCatching(() => {
         return new UnitTestingService().execute('unittest');
       })
           .map((res: UnitTestingResponse) => {
@@ -126,7 +124,7 @@ describe('Result test', () => {
     });
 
     it('should get value successfully', () => {
-      const r: UnitTestingResponse = Result.runCatching(() => {
+      const r: UnitTestingResponse = Resultt.runCatching(() => {
         return new UnitTestingService().execute('unittest');
       })
           .getOrElse((it: Error) => {
@@ -139,7 +137,7 @@ describe('Result test', () => {
     });
 
     it('should get value by failure action', () => {
-      const r: UnitTestingResponse = Result.runCatching(() => {
+      const r: UnitTestingResponse = Resultt.runCatching(() => {
         return new UnitTestingErrorService().execute('unittest');
       })
           .getOrElse((it: Error) => {
