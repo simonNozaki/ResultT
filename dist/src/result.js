@@ -15,52 +15,35 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Result = void 0;
+exports.Resultt = void 0;
 var fp_ts_1 = require("fp-ts");
 var Option_1 = require("fp-ts/lib/Option");
-var immutable_1 = require("immutable");
-var Result = (function () {
-    function Result(value, errors) {
-        this.DEFAULT_ERROR_MESSAGE = 'Unexpcted error be thrown on applying operator';
+var Resultt = (function () {
+    function Resultt(value) {
         this._value = value ? fp_ts_1.option.of(value) : Option_1.none;
-        this._errors = errors ? errors : [];
     }
-    Object.defineProperty(Result.prototype, "errors", {
-        get: function () {
-            return (0, immutable_1.List)(this._errors);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Result.prototype.addError = function (message) {
-        this._errors.push(message);
-        return this;
-    };
-    Result.prototype.isFailure = function () {
+    Resultt.prototype.isFailure = function () {
         return this instanceof Failure;
     };
-    Result.prototype.isSuccess = function () {
+    Resultt.prototype.isSuccess = function () {
         return !this.isFailure();
     };
-    Result.prototype.onFailure = function (message, consumer) {
+    Resultt.prototype.onFailure = function (consumer) {
         if (this.isSuccess()) {
             return this;
-        }
-        if (message) {
-            this._errors.push(message);
         }
         if (consumer && isError(this._value)) {
             consumer(this._value);
         }
         return this;
     };
-    Result.prototype.onSuccess = function (consumer) {
+    Resultt.prototype.onSuccess = function (consumer) {
         if (fp_ts_1.option.isSome(this._value)) {
             consumer(this._value.value);
         }
         return this;
     };
-    Result.prototype.fold = function (onSuccess, onFailure) {
+    Resultt.prototype.fold = function (onSuccess, onFailure) {
         if (this.isSuccess()) {
             if (fp_ts_1.option.isSome(this._value)) {
                 return onSuccess(this._value.value);
@@ -69,22 +52,22 @@ var Result = (function () {
         if (fp_ts_1.option.isSome(this._value) && isError(this._value.value)) {
             return onFailure(this._value.value);
         }
-        throw new Error(this.DEFAULT_ERROR_MESSAGE);
+        throw new Error('Fold cannot apply for the value of this class because of None.');
     };
-    Result.prototype.map = function (transform) {
+    Resultt.prototype.map = function (transform) {
         if (this.isSuccess()) {
             if (fp_ts_1.option.isSome(this._value)) {
-                return new Result(transform(this._value.value));
+                return new Resultt(transform(this._value.value));
             }
-            return new Result(transform());
+            return new Resultt(transform());
         }
         if (fp_ts_1.option.isSome(this._value) && isError(this._value.value)) {
             var v = this._value.value;
             return new Failure(v);
         }
-        throw new Error(this.DEFAULT_ERROR_MESSAGE);
+        throw new Error('Map cannot apply for the value of this class');
     };
-    Result.prototype.getOrThrow = function (e) {
+    Resultt.prototype.getOrThrow = function (e) {
         if (this.isSuccess() && fp_ts_1.option.isSome(this._value)) {
             return this._value.value;
         }
@@ -93,13 +76,13 @@ var Result = (function () {
         }
         this.throwOnFailure();
     };
-    Result.prototype.getOrDefault = function (elseValue) {
+    Resultt.prototype.getOrDefault = function (elseValue) {
         if (this.isSuccess() && fp_ts_1.option.isSome(this._value)) {
             return this._value.value;
         }
         return elseValue;
     };
-    Result.prototype.getOrElse = function (onFailure) {
+    Resultt.prototype.getOrElse = function (onFailure) {
         var _this = this;
         return this.fold(function () {
             return (0, Option_1.getOrElse)(function () { return null; })(_this._value);
@@ -108,22 +91,22 @@ var Result = (function () {
             return onFailure(e);
         });
     };
-    Result.prototype.throwOnFailure = function () {
+    Resultt.prototype.throwOnFailure = function () {
         if (isError(this._value)) {
             throw this._value;
         }
     };
-    Result.runCatching = function (supplier) {
+    Resultt.runCatching = function (supplier) {
         try {
-            return new Result(supplier());
+            return new Resultt(supplier());
         }
         catch (e) {
             return new Failure(e);
         }
     };
-    return Result;
+    return Resultt;
 }());
-exports.Result = Result;
+exports.Resultt = Resultt;
 var isError = function (arg) {
     return typeof arg === 'object' && 'name' in arg && 'message' in arg;
 };
@@ -145,5 +128,5 @@ var Failure = (function (_super) {
         configurable: true
     });
     return Failure;
-}(Result));
+}(Resultt));
 //# sourceMappingURL=result.js.map

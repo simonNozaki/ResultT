@@ -1,7 +1,6 @@
 /* eslint-disable new-cap */
 import {option} from 'fp-ts';
 import {none, Option, getOrElse} from 'fp-ts/lib/Option';
-import {List} from 'immutable';
 
 /**
  * Base class for runtime result.
@@ -9,45 +8,20 @@ import {List} from 'immutable';
  * Highly inspired by Kotlin Result/runCatching.
  *
  * @param {T} T Type parameter for main value.
- * @param {E} E Type parameter for error value.
  * @see usage ... test/appliation/result-test.ts
  */
-export class Result<T, E> {
-  /** error message or strings */
-  private readonly _errors: E[];
+export class Resultt<T> {
   /** Successed data of this object */
   private readonly _value: Option<T>;
-  private readonly DEFAULT_ERROR_MESSAGE =
-    'Unexpcted error be thrown on applying operator';
-
-  /**
-     * Get errors as immutbale list
-     */
-  get errors(): List<E> {
-    return List(this._errors);
-  }
 
   constructor()
   constructor(value: T)
-  constructor(errors: string[])
   /**
    * @param {T} value
    * @param {E[]} errors
    */
-  constructor(value?: T, errors?: E[]) {
+  constructor(value?: T) {
     this._value = value ? option.of(value) : none;
-    this._errors = errors ? errors : [];
-  }
-
-  /**
-   * Add custom error message.
-   * This makes caller set an error message only through this method.
-   * @param {E} message
-   * @return {Result<T, E>}
-   */
-  addError(message: E): Result<T, E> {
-    this._errors.push(message);
-    return this;
   }
 
   /**
@@ -68,16 +42,12 @@ export class Result<T, E> {
 
   /**
    * Set action on failure.
-   * @param {E} message custom message value on failure if want.
    * @param {()} consumer action on failure.
-   * @return {Result<T, E>}
+   * @return {Resultt<T, E>}
    */
-  onFailure(message?: E, consumer?: (it?: Error) => void): Result<T, E> {
+  onFailure(consumer?: (it?: Error) => void): Resultt<T> {
     if (this.isSuccess()) {
       return this;
-    }
-    if (message) {
-      this._errors.push(message);
     }
     // call argument consumer with the error of Failure instance
     if (consumer && isError(this._value)) {
@@ -89,9 +59,9 @@ export class Result<T, E> {
   /**
    * Set an additional action on successing
    * @param {()} consumer
-   * @return {Result<T, E>}
+   * @return {Resultt<T, E>}
    */
-  onSuccess(consumer: (arg: T) => void): Result<T, E> {
+  onSuccess(consumer: (arg: T) => void): Resultt<T> {
     if (option.isSome(this._value)) {
       consumer(this._value.value);
     }
@@ -107,7 +77,7 @@ export class Result<T, E> {
    * @return {R}
    */
   fold<R>(
-      onSuccess: (value?: T, errors?: E[]) => R,
+      onSuccess: (value?: T) => R,
       onFailure: (earg?: Error) => R,
   ): R {
     if (this.isSuccess()) {
@@ -118,26 +88,28 @@ export class Result<T, E> {
     if (option.isSome(this._value) && isError(this._value.value)) {
       return onFailure(this._value.value);
     }
-    throw new Error(this.DEFAULT_ERROR_MESSAGE);
+    throw new Error(
+        'Fold cannot apply for the value of this class because of None.',
+    );
   }
 
   /**
    * Map the result to another result, transforming by the argument.
    * @param {function} transform callback function for mapping another Result.
-   * @return {Result<R, E>}
+   * @return {Resultt<R, E>}
    */
-  map<R>(transform: (arg?: T) => R): Result<R, E> {
+  map<R>(transform: (arg?: T) => R): Resultt<R> {
     if (this.isSuccess()) {
       if (option.isSome(this._value)) {
-        return new Result<R, E>(transform(this._value.value));
+        return new Resultt<R>(transform(this._value.value));
       }
-      return new Result<R, E>(transform());
+      return new Resultt<R>(transform());
     }
     if (option.isSome(this._value) && isError(this._value.value)) {
       const v: unknown = this._value.value as unknown;
-      return new Failure<R, E>(v as R);
+      return new Failure<R>(v as R);
     }
-    throw new Error(this.DEFAULT_ERROR_MESSAGE);
+    throw new Error('Map cannot apply for the value of this class');
   }
 
   /**
@@ -200,13 +172,13 @@ export class Result<T, E> {
    * Force the first type parameter type of Error
    * when the action result catch Error.
    * @param {()} supplier function to be called
-   * @return {Result<any, any>} The result of execution in argument supplier.
+   * @return {Resultt<any, any>} The result of execution in argument supplier.
    */
-  static runCatching<T, E>(supplier: () => T): Result<T, E> {
+  static runCatching<T>(supplier: () => T): Resultt<T> {
     try {
-      return new Result<T, E>(supplier());
+      return new Resultt<T>(supplier());
     } catch (e) {
-      return new Failure<T, E>(e);
+      return new Failure<T>(e);
     }
   }
 }
@@ -218,7 +190,7 @@ const isError = (arg: unknown): arg is Error => {
 /**
  * Result of failure. This class is instanciated on catching an error
  */
-class Failure<T, E> extends Result<T, E> {
+class Failure<T> extends Resultt<T> {
   /**
    * @param {Error} _error
    */

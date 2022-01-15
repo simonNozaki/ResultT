@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [Result](classes/Result.md)
+- [Resultt](classes/Resultt.md)

@@ -15,7 +15,7 @@ type declaration is included.
 
 class import...
 ```typescript
-import { Result } from 'resultt';
+import { Resultt } from 'resultt';
 ```
 
 ## Usage
@@ -32,7 +32,7 @@ class Service {
 }
 
 // execute some function and wrap by "runCatching"
-const result: Result<Response, unknown> = Result.runCatching(() => {
+const result: Result<Response> = Result.runCatching(() => {
         return new Service().execute('execution');
     })
     .onSuccess((v) => {
