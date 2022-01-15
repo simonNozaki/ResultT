@@ -1,6 +1,6 @@
 {
   "name": "resultt",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Type-safe runtime wrapping library",
   "typings": "dist/src/index.d.ts",
   "main": "dist/src/index.js",
@@ -12,7 +12,7 @@
     "assemble": "npx tsc",
     "build": "npx jest && npm run docs && npm run assemble"
   },
-  "author": "tldk1993@gmail.com",
+  "author": "Simon Nozaki <tldk1993@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "fp-ts": "^2.11.5",
