@@ -19,8 +19,7 @@
   "author": "Simon Nozaki <tldk1993@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "fp-ts": "^2.11.5",
-    "immutable": "^4.0.0"
+    "fp-ts": "^2.11.5"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
