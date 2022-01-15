@@ -20,7 +20,6 @@ var fp_ts_1 = require("fp-ts");
 var Option_1 = require("fp-ts/lib/Option");
 var Resultt = (function () {
     function Resultt(value) {
-        this.DEFAULT_ERROR_MESSAGE = 'Unexpcted error be thrown on applying operator';
         this._value = value ? fp_ts_1.option.of(value) : Option_1.none;
     }
     Resultt.prototype.isFailure = function () {
@@ -53,7 +52,7 @@ var Resultt = (function () {
         if (fp_ts_1.option.isSome(this._value) && isError(this._value.value)) {
             return onFailure(this._value.value);
         }
-        throw new Error(this.DEFAULT_ERROR_MESSAGE);
+        throw new Error('Fold cannot apply for the value of this class because of None.');
     };
     Resultt.prototype.map = function (transform) {
         if (this.isSuccess()) {
@@ -66,7 +65,7 @@ var Resultt = (function () {
             var v = this._value.value;
             return new Failure(v);
         }
-        throw new Error(this.DEFAULT_ERROR_MESSAGE);
+        throw new Error('Map cannot apply for the value of this class');
     };
     Resultt.prototype.getOrThrow = function (e) {
         if (this.isSuccess() && fp_ts_1.option.isSome(this._value)) {

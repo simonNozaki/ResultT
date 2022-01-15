@@ -1,6 +1,5 @@
 export declare class Resultt<T> {
     private readonly _value;
-    private readonly DEFAULT_ERROR_MESSAGE;
     constructor();
     constructor(value: T);
     isFailure(): boolean;

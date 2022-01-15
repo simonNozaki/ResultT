@@ -6,8 +6,6 @@ Base class for runtime result.
 This class may express the context for a runtime and its result. <br>
 Highly inspired by Kotlin Result/runCatching.
 
-**`param`** Type parameter for error value.
-
 **`see`** usage ... test/appliation/result-test.ts
 
 ## Type parameters
@@ -24,7 +22,6 @@ Highly inspired by Kotlin Result/runCatching.
 
 ### Properties
 
-- [DEFAULT\_ERROR\_MESSAGE](Resultt.md#default_error_message)
 - [\_value](Resultt.md#_value)
 
 ### Methods
@@ -55,7 +52,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:20](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L20)
+[result.ts:17](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L17)
 
 • **new Resultt**<`T`\>(`value`)
 
@@ -73,19 +70,9 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:21](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L21)
+[result.ts:18](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L18)
 
 ## Properties
-
-### DEFAULT\_ERROR\_MESSAGE
-
-• `Private` `Readonly` **DEFAULT\_ERROR\_MESSAGE**: ``"Unexpcted error be thrown on applying operator"``
-
-#### Defined in
-
-[result.ts:17](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L17)
-
-___
 
 ### \_value
 
@@ -95,7 +82,7 @@ Successed data of this object
 
 #### Defined in
 
-[result.ts:16](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L16)
+[result.ts:15](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L15)
 
 ## Methods
 
@@ -125,7 +112,7 @@ If this function cannot return another instance, throw Error.
 
 #### Defined in
 
-[result.ts:82](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L82)
+[result.ts:79](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L79)
 
 ___
 
@@ -147,7 +134,7 @@ Get the value of this result or default value in argument
 
 #### Defined in
 
-[result.ts:137](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L137)
+[result.ts:136](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L136)
 
 ___
 
@@ -176,7 +163,7 @@ Shorthand for the method `fold`.
 
 #### Defined in
 
-[result.ts:150](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L150)
+[result.ts:149](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L149)
 
 ___
 
@@ -198,7 +185,7 @@ Get a value of this result or throw error if not.
 
 #### Defined in
 
-[result.ts:122](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L122)
+[result.ts:121](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L121)
 
 ___
 
@@ -214,7 +201,7 @@ Return true if the result was failed.
 
 #### Defined in
 
-[result.ts:34](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L34)
+[result.ts:31](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L31)
 
 ___
 
@@ -230,7 +217,7 @@ Return true if the result was successed.
 
 #### Defined in
 
-[result.ts:42](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L42)
+[result.ts:39](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L39)
 
 ___
 
@@ -258,7 +245,7 @@ Map the result to another result, transforming by the argument.
 
 #### Defined in
 
-[result.ts:102](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L102)
+[result.ts:101](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L101)
 
 ___
 
@@ -280,7 +267,7 @@ Set action on failure.
 
 #### Defined in
 
-[result.ts:51](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L51)
+[result.ts:48](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L48)
 
 ___
 
@@ -302,7 +289,7 @@ Set an additional action on successing
 
 #### Defined in
 
-[result.ts:67](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L67)
+[result.ts:64](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L64)
 
 ___
 
@@ -316,7 +303,7 @@ ___
 
 #### Defined in
 
-[result.ts:165](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L165)
+[result.ts:164](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L164)
 
 ___
 
@@ -348,4 +335,4 @@ The result of execution in argument supplier.
 
 #### Defined in
 
-[result.ts:178](https://github.com/simonNozaki/ResultT/blob/cba32ef/src/result.ts#L178)
+[result.ts:177](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L177)
