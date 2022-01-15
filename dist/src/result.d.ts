@@ -1,22 +1,17 @@
-import { List } from 'immutable';
-export declare class Result<T, E> {
-    private readonly _errors;
+export declare class Resultt<T> {
     private readonly _value;
     private readonly DEFAULT_ERROR_MESSAGE;
-    get errors(): List<E>;
     constructor();
     constructor(value: T);
-    constructor(errors: string[]);
-    addError(message: E): Result<T, E>;
     isFailure(): boolean;
     isSuccess(): boolean;
-    onFailure(message?: E, consumer?: (it?: Error) => void): Result<T, E>;
-    onSuccess(consumer: (arg: T) => void): Result<T, E>;
-    fold<R>(onSuccess: (value?: T, errors?: E[]) => R, onFailure: (earg?: Error) => R): R;
-    map<R>(transform: (arg?: T) => R): Result<R, E>;
+    onFailure(consumer?: (it?: Error) => void): Resultt<T>;
+    onSuccess(consumer: (arg: T) => void): Resultt<T>;
+    fold<R>(onSuccess: (value?: T) => R, onFailure: (earg?: Error) => R): R;
+    map<R>(transform: (arg?: T) => R): Resultt<R>;
     getOrThrow(e?: Error): T;
     getOrDefault(elseValue: T): T;
     getOrElse<R>(onFailure: (earg?: Error) => R): R;
     private throwOnFailure;
-    static runCatching<T, E>(supplier: () => T): Result<T, E>;
+    static runCatching<T>(supplier: () => T): Resultt<T>;
 }
