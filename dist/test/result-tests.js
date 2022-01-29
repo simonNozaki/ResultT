@@ -29,14 +29,16 @@ describe('Result test', function () {
         expect(result.getOrThrow()).toEqual({ data: 'unittest' });
     });
     it('should handle error', function () {
+        var error;
         var result = result_1.Resultt.runCatching(function () {
             return new UnitTestingErrorService().execute('unittest');
         })
             .onFailure(function (it) {
             console.log(_this);
-            throw it;
+            error = it.message;
         });
         expect(result.isFailure()).toBe(true);
+        expect(error).toBe('Application failed on unit testing.');
     });
     it('can instantiate Result directly', function () {
         var res = new UnitTestingService().execute('unittest');
