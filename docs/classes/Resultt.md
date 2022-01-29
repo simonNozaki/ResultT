@@ -52,7 +52,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:17](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L17)
+[result.ts:17](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L17)
 
 • **new Resultt**<`T`\>(`value`)
 
@@ -70,7 +70,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:18](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L18)
+[result.ts:18](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L18)
 
 ## Properties
 
@@ -82,7 +82,7 @@ Successed data of this object
 
 #### Defined in
 
-[result.ts:15](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L15)
+[result.ts:15](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L15)
 
 ## Methods
 
@@ -112,7 +112,7 @@ If this function cannot return another instance, throw Error.
 
 #### Defined in
 
-[result.ts:79](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L79)
+[result.ts:80](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L80)
 
 ___
 
@@ -134,7 +134,7 @@ Get the value of this result or default value in argument
 
 #### Defined in
 
-[result.ts:136](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L136)
+[result.ts:137](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L137)
 
 ___
 
@@ -163,7 +163,7 @@ Shorthand for the method `fold`.
 
 #### Defined in
 
-[result.ts:149](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L149)
+[result.ts:150](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L150)
 
 ___
 
@@ -185,7 +185,7 @@ Get a value of this result or throw error if not.
 
 #### Defined in
 
-[result.ts:121](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L121)
+[result.ts:122](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L122)
 
 ___
 
@@ -201,7 +201,7 @@ Return true if the result was failed.
 
 #### Defined in
 
-[result.ts:31](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L31)
+[result.ts:31](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L31)
 
 ___
 
@@ -217,7 +217,7 @@ Return true if the result was successed.
 
 #### Defined in
 
-[result.ts:39](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L39)
+[result.ts:39](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L39)
 
 ___
 
@@ -245,7 +245,7 @@ Map the result to another result, transforming by the argument.
 
 #### Defined in
 
-[result.ts:101](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L101)
+[result.ts:102](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L102)
 
 ___
 
@@ -267,7 +267,7 @@ Set action on failure.
 
 #### Defined in
 
-[result.ts:48](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L48)
+[result.ts:48](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L48)
 
 ___
 
@@ -289,7 +289,7 @@ Set an additional action on successing
 
 #### Defined in
 
-[result.ts:64](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L64)
+[result.ts:65](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L65)
 
 ___
 
@@ -303,7 +303,7 @@ ___
 
 #### Defined in
 
-[result.ts:164](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L164)
+[result.ts:165](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L165)
 
 ___
 
@@ -335,4 +335,4 @@ The result of execution in argument supplier.
 
 #### Defined in
 
-[result.ts:177](https://github.com/simonNozaki/ResultT/blob/c55ab77/src/result.ts#L177)
+[result.ts:178](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L178)

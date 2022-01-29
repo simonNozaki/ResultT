@@ -43,16 +43,18 @@ describe('Result test', () => {
     });
 
     it('should handle error', () => {
+      let error: string;
       const result: Resultt<UnitTestingResponse> =
       Resultt.runCatching<UnitTestingResponse>(() => {
         return new UnitTestingErrorService().execute('unittest');
       })
           .onFailure((it: Error) => {
             console.log(this);
-            throw it;
+            error = it.message;
           });
 
       expect(result.isFailure()).toBe(true);
+      expect(error).toBe('Application failed on unit testing.');
     });
 
     it('can instantiate Result directly', () => {

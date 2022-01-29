@@ -50,10 +50,11 @@ export class Resultt<T> {
       return this;
     }
     // call argument consumer with the error of Failure instance
-    if (consumer && isError(this._value)) {
-      consumer(this._value);
+    if (consumer && option.isSome(this._value) && isError(this._value.value)) {
+      consumer(this._value.value);
+      return this;
     }
-    return this;
+    throw new Error('The value of the instance is invalid.');
   }
 
   /**
