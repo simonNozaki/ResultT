@@ -101,7 +101,7 @@ describe('Result test', () => {
     });
 
     it('should map result to another result on failure', () => {
-      Resultt.runCatching(() => {
+      const result: Resultt<number> = Resultt.runCatching(() => {
         return new UnitTestingErrorService().execute('unittest');
       })
           .map((res: UnitTestingResponse) => {
@@ -111,18 +111,22 @@ describe('Result test', () => {
             // assert that the message thrown in the error
             expect(it.message).toBe('Application failed on unit testing.');
           });
+      console.log(result);
+      expect(result.isFailure()).toBe(true);
     });
 
     it('should map result to another result on success', () => {
-      Resultt.runCatching(() => {
+      const result: Resultt<number> = Resultt.runCatching(() => {
         return new UnitTestingService().execute('unittest');
       })
           .map((res: UnitTestingResponse) => {
             return res.data.length;
           })
           .onSuccess((it: number) => {
-            expect(it).toBe(8);
+            return it;
           });
+      expect(result.isSuccess()).toBe(true);
+      expect(result.getOrThrow()).toBe(8);
     });
 
     it('should get value successfully', () => {
@@ -149,5 +153,14 @@ describe('Result test', () => {
             };
           });
       expect(r.data).toBe('default');
+    });
+
+    it('should get null', () => {
+      const r = Resultt.runCatching(() => {
+        return new UnitTestingErrorService().execute('unittest');
+      });
+
+      expect(r.getOrNull()).toBeNull();
+      expect(r.isFailure()).toBeTruthy();
     });
 });
