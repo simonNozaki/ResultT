@@ -1,6 +1,6 @@
 {
   "name": "resultt",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Type-safe runtime wrapping library",
   "typings": "dist/src/index.d.ts",
   "main": "dist/src/index.js",
@@ -10,7 +10,8 @@
   "scripts": {
     "docs": "npx typedoc --out docs src",
     "assemble": "npx tsc",
-    "build": "npx jest && npm run docs && npm run assemble"
+    "build": "npx jest && npm run docs && npm run assemble",
+    "test": "./node_modules/.bin/jest"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,7 @@
   "author": "Simon Nozaki <tldk1993@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "fp-ts": "^2.11.5",
+    "fp-ts": "^2.12.1",
     "ts-node": "^10.4.0"
   },
   "devDependencies": {
@@ -30,9 +31,9 @@
     "eslint-config-google": "^0.14.0",
     "jest": "^27.4.5",
     "ts-jest": "^27.1.2",
-    "typedoc": "^0.22.10",
-    "typedoc-plugin-markdown": "^3.11.8",
-    "typescript": "^4.5.4"
+    "typedoc": "^0.22.15",
+    "typedoc-plugin-markdown": "^3.12.1",
+    "typescript": "^4.6.4"
   },
   "keywords": [
     "Kotlin",

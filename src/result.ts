@@ -1,6 +1,7 @@
 /* eslint-disable new-cap */
 import {option} from 'fp-ts';
 import {none, Option, getOrElse} from 'fp-ts/lib/Option';
+import {when} from './when';
 
 /**
  * Base class for runtime result.
@@ -160,6 +161,27 @@ export class Resultt<T> {
   }
 
   /**
+   * Get the encapsulated value of this class instance if success.
+   * @return {T | null}
+   */
+  getOrNull(): T | null {
+    return when(this)
+        .on((v: Resultt<T>) => v.isSuccess(), () => this._value)
+        .else(() => null);
+  }
+
+  /**
+   * Return the string expression of this class instance.
+   * @return {string}
+   */
+  toString(): string {
+    if (this.isFailure()) {
+
+    }
+    return `Success${this._value}`;
+  }
+
+  /**
    * @return {void}
    */
   private throwOnFailure(): void {
@@ -206,5 +228,11 @@ class Failure<T> extends Resultt<T> {
    */
   get error(): T {
     return this._error;
+  }
+  /**
+   * @return {string}
+   */
+  toString(): string {
+    return `Error${this._error}`;
   }
 }

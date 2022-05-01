@@ -18,6 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Resultt = void 0;
 var fp_ts_1 = require("fp-ts");
 var Option_1 = require("fp-ts/lib/Option");
+var when_1 = require("./when");
 var Resultt = (function () {
     function Resultt(value) {
         this._value = value ? fp_ts_1.option.of(value) : Option_1.none;
@@ -92,6 +93,17 @@ var Resultt = (function () {
             return onFailure(e);
         });
     };
+    Resultt.prototype.getOrNull = function () {
+        var _this = this;
+        return (0, when_1.when)(this)
+            .on(function (v) { return v.isSuccess(); }, function () { return _this._value; })
+            .else(function () { return null; });
+    };
+    Resultt.prototype.toString = function () {
+        if (this.isFailure()) {
+        }
+        return "Success".concat(this._value);
+    };
     Resultt.prototype.throwOnFailure = function () {
         if (isError(this._value)) {
             throw this._value;
@@ -128,6 +140,9 @@ var Failure = (function (_super) {
         enumerable: false,
         configurable: true
     });
+    Failure.prototype.toString = function () {
+        return "Error".concat(this._error);
+    };
     return Failure;
 }(Resultt));
 //# sourceMappingURL=result.js.map

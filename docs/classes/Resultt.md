@@ -29,6 +29,7 @@ Highly inspired by Kotlin Result/runCatching.
 - [fold](Resultt.md#fold)
 - [getOrDefault](Resultt.md#getordefault)
 - [getOrElse](Resultt.md#getorelse)
+- [getOrNull](Resultt.md#getornull)
 - [getOrThrow](Resultt.md#getorthrow)
 - [isFailure](Resultt.md#isfailure)
 - [isSuccess](Resultt.md#issuccess)
@@ -36,6 +37,7 @@ Highly inspired by Kotlin Result/runCatching.
 - [onFailure](Resultt.md#onfailure)
 - [onSuccess](Resultt.md#onsuccess)
 - [throwOnFailure](Resultt.md#throwonfailure)
+- [toString](Resultt.md#tostring)
 - [runCatching](Resultt.md#runcatching)
 
 ## Constructors
@@ -52,7 +54,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:17](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L17)
+[result.ts:18](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L18)
 
 • **new Resultt**<`T`\>(`value`)
 
@@ -70,7 +72,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:18](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L18)
+[result.ts:19](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L19)
 
 ## Properties
 
@@ -82,7 +84,7 @@ Successed data of this object
 
 #### Defined in
 
-[result.ts:15](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L15)
+[result.ts:16](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L16)
 
 ## Methods
 
@@ -112,7 +114,7 @@ If this function cannot return another instance, throw Error.
 
 #### Defined in
 
-[result.ts:80](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L80)
+[result.ts:81](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L81)
 
 ___
 
@@ -134,7 +136,7 @@ Get the value of this result or default value in argument
 
 #### Defined in
 
-[result.ts:137](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L137)
+[result.ts:138](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L138)
 
 ___
 
@@ -163,7 +165,23 @@ Shorthand for the method `fold`.
 
 #### Defined in
 
-[result.ts:150](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L150)
+[result.ts:151](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L151)
+
+___
+
+### getOrNull
+
+▸ **getOrNull**(): `T`
+
+Get the encapsulated value of this class instance if success.
+
+#### Returns
+
+`T`
+
+#### Defined in
+
+[result.ts:167](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L167)
 
 ___
 
@@ -185,7 +203,7 @@ Get a value of this result or throw error if not.
 
 #### Defined in
 
-[result.ts:122](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L122)
+[result.ts:123](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L123)
 
 ___
 
@@ -201,7 +219,7 @@ Return true if the result was failed.
 
 #### Defined in
 
-[result.ts:31](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L31)
+[result.ts:32](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L32)
 
 ___
 
@@ -217,7 +235,7 @@ Return true if the result was successed.
 
 #### Defined in
 
-[result.ts:39](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L39)
+[result.ts:40](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L40)
 
 ___
 
@@ -245,7 +263,7 @@ Map the result to another result, transforming by the argument.
 
 #### Defined in
 
-[result.ts:102](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L102)
+[result.ts:103](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L103)
 
 ___
 
@@ -267,7 +285,7 @@ Set action on failure.
 
 #### Defined in
 
-[result.ts:48](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L48)
+[result.ts:49](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L49)
 
 ___
 
@@ -289,7 +307,7 @@ Set an additional action on successing
 
 #### Defined in
 
-[result.ts:65](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L65)
+[result.ts:66](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L66)
 
 ___
 
@@ -303,7 +321,23 @@ ___
 
 #### Defined in
 
-[result.ts:165](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L165)
+[result.ts:187](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L187)
+
+___
+
+### toString
+
+▸ **toString**(): `string`
+
+Return the string expression of this class instance.
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[result.ts:177](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L177)
 
 ___
 
@@ -335,4 +369,4 @@ The result of execution in argument supplier.
 
 #### Defined in
 
-[result.ts:178](https://github.com/simonNozaki/ResultT/blob/c1f9d9a/src/result.ts#L178)
+[result.ts:200](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L200)
