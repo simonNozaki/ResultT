@@ -88,5 +88,4 @@ console.log(n);  // => 9
 
 
 ## For more info...
-Full class documentation is here: [docs](https://github.com/simonNozaki/ResultT/blob/main/docs/classes/Result.md)
-
+Full class documentation is here: [docs](https://github.com/simonNozaki/ResultT/blob/main/docs/classes/Resultt.md)
