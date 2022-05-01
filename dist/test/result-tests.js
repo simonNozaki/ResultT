@@ -72,7 +72,7 @@ describe('Result test', function () {
         expect(count).toBe(0);
     });
     it('should map result to another result on failure', function () {
-        result_1.Resultt.runCatching(function () {
+        var result = result_1.Resultt.runCatching(function () {
             return new UnitTestingErrorService().execute('unittest');
         })
             .map(function (res) {
@@ -81,17 +81,21 @@ describe('Result test', function () {
             .onFailure(function (it) {
             expect(it.message).toBe('Application failed on unit testing.');
         });
+        console.log(result);
+        expect(result.isFailure()).toBe(true);
     });
     it('should map result to another result on success', function () {
-        result_1.Resultt.runCatching(function () {
+        var result = result_1.Resultt.runCatching(function () {
             return new UnitTestingService().execute('unittest');
         })
             .map(function (res) {
             return res.data.length;
         })
             .onSuccess(function (it) {
-            expect(it).toBe(8);
+            return it;
         });
+        expect(result.isSuccess()).toBe(true);
+        expect(result.getOrThrow()).toBe(8);
     });
     it('should get value successfully', function () {
         var r = result_1.Resultt.runCatching(function () {
@@ -116,6 +120,13 @@ describe('Result test', function () {
             };
         });
         expect(r.data).toBe('default');
+    });
+    it('should get null', function () {
+        var r = result_1.Resultt.runCatching(function () {
+            return new UnitTestingErrorService().execute('unittest');
+        });
+        expect(r.getOrNull()).toBeNull();
+        expect(r.isFailure()).toBeTruthy();
     });
 });
 //# sourceMappingURL=result-tests.js.map

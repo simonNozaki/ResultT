@@ -11,6 +11,8 @@ export declare class Resultt<T> {
     getOrThrow(e?: Error): T;
     getOrDefault(elseValue: T): T;
     getOrElse<R>(onFailure: (earg?: Error) => R): R;
+    getOrNull(): T | null;
+    toString(): string;
     private throwOnFailure;
     static runCatching<T>(supplier: () => T): Resultt<T>;
 }
