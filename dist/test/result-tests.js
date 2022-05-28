@@ -97,6 +97,20 @@ describe('Result test', function () {
         expect(result.isSuccess()).toBe(true);
         expect(result.getOrThrow()).toBe(8);
     });
+    it('should handle error on mapping the result', function () {
+        var resultt = result_1.Resultt.runCatching(function () {
+            var res = new UnitTestingService().execute('unittest');
+            return res.data.length;
+        })
+            .mapCatching(function (res) {
+            throw new Error('Given the error happened on mapping ...');
+        })
+            .onFailure(function (it) {
+            console.error(it);
+        });
+        expect(resultt.isFailure()).toBeTruthy();
+        expect(resultt.getOrDefault(1)).toBe(1);
+    });
     it('should get value successfully', function () {
         var r = result_1.Resultt.runCatching(function () {
             return new UnitTestingService().execute('unittest');

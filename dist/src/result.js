@@ -23,6 +23,9 @@ var Resultt = (function () {
     function Resultt(value) {
         this._value = value ? fp_ts_1.option.of(value) : Option_1.none;
     }
+    Resultt.failure = function (error) {
+        return new Failure(error);
+    };
     Resultt.prototype.isFailure = function () {
         return this instanceof Failure;
     };
@@ -62,6 +65,18 @@ var Resultt = (function () {
                 return new Resultt(transform(this._value.value));
             }
             return new Resultt(transform());
+        }
+        if (fp_ts_1.option.isSome(this._value) && isError(this._value.value)) {
+            var v = this._value.value;
+            return new Failure(v);
+        }
+        throw new Error('Map cannot apply for the value of this class');
+    };
+    Resultt.prototype.mapCatching = function (transform) {
+        if (this.isSuccess()) {
+            var optionalValue_1 = fp_ts_1.option.isSome(this._value) ?
+                this._value.value : null;
+            return Resultt.runCatching(function () { return transform(optionalValue_1); });
         }
         if (fp_ts_1.option.isSome(this._value) && isError(this._value.value)) {
             var v = this._value.value;

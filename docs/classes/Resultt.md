@@ -34,10 +34,12 @@ Highly inspired by Kotlin Result/runCatching.
 - [isFailure](Resultt.md#isfailure)
 - [isSuccess](Resultt.md#issuccess)
 - [map](Resultt.md#map)
+- [mapCatching](Resultt.md#mapcatching)
 - [onFailure](Resultt.md#onfailure)
 - [onSuccess](Resultt.md#onsuccess)
 - [throwOnFailure](Resultt.md#throwonfailure)
 - [toString](Resultt.md#tostring)
+- [failure](Resultt.md#failure)
 - [runCatching](Resultt.md#runcatching)
 
 ## Constructors
@@ -54,7 +56,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:18](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L18)
+[result.ts:18](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L18)
 
 • **new Resultt**<`T`\>(`value`)
 
@@ -72,7 +74,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:19](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L19)
+[result.ts:19](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L19)
 
 ## Properties
 
@@ -84,7 +86,7 @@ Successed data of this object
 
 #### Defined in
 
-[result.ts:16](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L16)
+[result.ts:16](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L16)
 
 ## Methods
 
@@ -114,7 +116,7 @@ If this function cannot return another instance, throw Error.
 
 #### Defined in
 
-[result.ts:81](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L81)
+[result.ts:90](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L90)
 
 ___
 
@@ -136,7 +138,7 @@ Get the value of this result or default value in argument
 
 #### Defined in
 
-[result.ts:138](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L138)
+[result.ts:166](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L166)
 
 ___
 
@@ -165,7 +167,7 @@ Shorthand for the method `fold`.
 
 #### Defined in
 
-[result.ts:151](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L151)
+[result.ts:179](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L179)
 
 ___
 
@@ -181,7 +183,7 @@ Get the encapsulated value of this class instance if success.
 
 #### Defined in
 
-[result.ts:167](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L167)
+[result.ts:195](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L195)
 
 ___
 
@@ -203,7 +205,7 @@ Get a value of this result or throw error if not.
 
 #### Defined in
 
-[result.ts:123](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L123)
+[result.ts:151](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L151)
 
 ___
 
@@ -219,7 +221,7 @@ Return true if the result was failed.
 
 #### Defined in
 
-[result.ts:32](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L32)
+[result.ts:41](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L41)
 
 ___
 
@@ -235,7 +237,7 @@ Return true if the result was successed.
 
 #### Defined in
 
-[result.ts:40](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L40)
+[result.ts:49](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L49)
 
 ___
 
@@ -263,7 +265,36 @@ Map the result to another result, transforming by the argument.
 
 #### Defined in
 
-[result.ts:103](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L103)
+[result.ts:112](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L112)
+
+___
+
+### mapCatching
+
+▸ **mapCatching**<`R`\>(`transform`): [`Resultt`](Resultt.md)<`R`\>
+
+Map the result to another result, transforming by the argument.
+`mapCatching` handle errors on executing the argument `transform`.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `R` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `transform` | (`arg?`: `T`) => `R` | callback function for mapping another Result. |
+
+#### Returns
+
+[`Resultt`](Resultt.md)<`R`\>
+
+#### Defined in
+
+[result.ts:132](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L132)
 
 ___
 
@@ -285,7 +316,7 @@ Set action on failure.
 
 #### Defined in
 
-[result.ts:49](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L49)
+[result.ts:58](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L58)
 
 ___
 
@@ -307,7 +338,7 @@ Set an additional action on successing
 
 #### Defined in
 
-[result.ts:66](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L66)
+[result.ts:75](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L75)
 
 ___
 
@@ -321,7 +352,7 @@ ___
 
 #### Defined in
 
-[result.ts:187](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L187)
+[result.ts:215](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L215)
 
 ___
 
@@ -337,7 +368,31 @@ Return the string expression of this class instance.
 
 #### Defined in
 
-[result.ts:177](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L177)
+[result.ts:205](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L205)
+
+___
+
+### failure
+
+▸ `Static` **failure**(`error`): `Failure`<`Error`\>
+
+Create Failure instance manually
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `error` | `Error` | error |
+
+#### Returns
+
+`Failure`<`Error`\>
+
+Failure
+
+#### Defined in
+
+[result.ts:33](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L33)
 
 ___
 
@@ -369,4 +424,4 @@ The result of execution in argument supplier.
 
 #### Defined in
 
-[result.ts:200](https://github.com/simonNozaki/ResultT/blob/6e3a5d7/src/result.ts#L200)
+[result.ts:228](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L228)
