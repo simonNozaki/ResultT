@@ -213,8 +213,8 @@ export class Resultt<T> {
    * @return {void}
    */
   private throwOnFailure(): void {
-    if (isError(this._value)) {
-      throw this._value;
+    if (this.isFailure() && option.isSome(this._value)) {
+      throw this._value.value;
     }
   }
 
