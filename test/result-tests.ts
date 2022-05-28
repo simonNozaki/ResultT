@@ -65,6 +65,12 @@ describe('Result test', () => {
       expect(result.getOrThrow()).toEqual({data: 'unittest'});
     });
 
+    it('create failure manually', () => {
+      const result = Resultt.failure(new Error('Manual Error!'));
+
+      expect(result.isFailure()).toBe(true);
+    });
+
     it('should fold with successing executing service class', () => {
       const count: number = Resultt.runCatching(() => {
         return new UnitTestingService().execute('unittest');
@@ -114,6 +120,11 @@ describe('Result test', () => {
           });
       console.log(result);
       expect(result.isFailure()).toBe(true);
+      try {
+        expect(result.getOrThrow()).toThrowError(new Error());
+      } catch (e) {
+        console.log('catch!');
+      }
     });
 
     it('should map result to another result on success', () => {
