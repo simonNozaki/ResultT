@@ -49,6 +49,7 @@ describe('Result test', () => {
         return new UnitTestingErrorService().execute('unittest');
       })
           .onFailure((it: Error) => {
+            // 言語仕様上はコンパイル可能だが望ましい使い方ではない(閉じた計算にするようラップしたほうがよい)
             console.log(this);
             error = it.message;
           });
@@ -127,6 +128,23 @@ describe('Result test', () => {
           });
       expect(result.isSuccess()).toBe(true);
       expect(result.getOrThrow()).toBe(8);
+    });
+
+    it('should handle error on mapping the result', () => {
+      const resultt: Resultt<number> = Resultt.runCatching(() => {
+        const res = new UnitTestingService().execute('unittest');
+        return res.data.length;
+      })
+          .mapCatching((res: number) => {
+            // dare to throw error for mapCatching
+            throw new Error('Given the error happened on mapping ...');
+          })
+          .onFailure((it: Error) => {
+            console.error(it);
+          });
+      expect(resultt.isFailure()).toBeTruthy();
+      // This case is expected to catch error and get value as Failure instance
+      expect(resultt.getOrDefault(1)).toBe(1);
     });
 
     it('should get value successfully', () => {
