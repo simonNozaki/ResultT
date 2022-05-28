@@ -1,6 +1,6 @@
 {
   "name": "resultt",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Type-safe runtime wrapping library",
   "typings": "dist/src/index.d.ts",
   "main": "dist/src/index.js",
