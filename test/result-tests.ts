@@ -49,6 +49,7 @@ describe('Result test', () => {
         return new UnitTestingErrorService().execute('unittest');
       })
           .onFailure((it: Error) => {
+            // 言語仕様上はコンパイル可能だが望ましい使い方ではない(閉じた計算にするようラップしたほうがよい)
             console.log(this);
             error = it.message;
           });
@@ -62,6 +63,12 @@ describe('Result test', () => {
       const result = new Resultt(res);
 
       expect(result.getOrThrow()).toEqual({data: 'unittest'});
+    });
+
+    it('create failure manually', () => {
+      const result = Resultt.failure(new Error('Manual Error!'));
+
+      expect(result.isFailure()).toBe(true);
     });
 
     it('should fold with successing executing service class', () => {
@@ -113,6 +120,11 @@ describe('Result test', () => {
           });
       console.log(result);
       expect(result.isFailure()).toBe(true);
+      try {
+        expect(result.getOrThrow()).toThrowError(new Error());
+      } catch (e) {
+        console.log('catch!');
+      }
     });
 
     it('should map result to another result on success', () => {
@@ -127,6 +139,23 @@ describe('Result test', () => {
           });
       expect(result.isSuccess()).toBe(true);
       expect(result.getOrThrow()).toBe(8);
+    });
+
+    it('should handle error on mapping the result', () => {
+      const resultt: Resultt<number> = Resultt.runCatching(() => {
+        const res = new UnitTestingService().execute('unittest');
+        return res.data.length;
+      })
+          .mapCatching((res: number) => {
+            // dare to throw error for mapCatching
+            throw new Error('Given the error happened on mapping ...');
+          })
+          .onFailure((it: Error) => {
+            console.error(it);
+          });
+      expect(resultt.isFailure()).toBeTruthy();
+      // This case is expected to catch error and get value as Failure instance
+      expect(resultt.getOrDefault(1)).toBe(1);
     });
 
     it('should get value successfully', () => {

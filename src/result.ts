@@ -26,6 +26,15 @@ export class Resultt<T> {
   }
 
   /**
+   * Create Failure instance manually
+   * @param {Error} error error
+   * @return {Failure} Failure
+   */
+  static failure(error: Error): Failure<Error> {
+    return new Failure(error);
+  }
+
+  /**
    * Return true if the result was failed.
    * @return {boolean}
    */
@@ -115,6 +124,25 @@ export class Resultt<T> {
   }
 
   /**
+   * Map the result to another result, transforming by the argument.
+   * `mapCatching` handle errors on executing the argument `transform`.
+   * @param {function} transform callback function for mapping another Result.
+   * @return {Resultt<R, E>}
+   */
+  mapCatching<R>(transform: (arg?: T) => R): Resultt<R> {
+    if (this.isSuccess()) {
+      const optionalValue = option.isSome(this._value) ?
+        this._value.value : null;
+      return Resultt.runCatching(() => transform(optionalValue));
+    }
+    if (option.isSome(this._value) && isError(this._value.value)) {
+      const v: unknown = this._value.value as unknown;
+      return new Failure<R>(v as R);
+    }
+    throw new Error('Map cannot apply for the value of this class');
+  }
+
+  /**
    * Get a value of this result or throw error if not.
    * @param {Error} e Some Error if want.
    * No parameter passed throw default Error.
@@ -185,8 +213,8 @@ export class Resultt<T> {
    * @return {void}
    */
   private throwOnFailure(): void {
-    if (isError(this._value)) {
-      throw this._value;
+    if (this.isFailure() && option.isSome(this._value)) {
+      throw this._value.value;
     }
   }
 
