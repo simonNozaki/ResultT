@@ -192,4 +192,15 @@ describe('Result test', () => {
       expect(r.getOrNull()).toBeNull();
       expect(r.isFailure()).toBeTruthy();
     });
+
+    it('can recover', () => {
+      const r = Resultt.runCatching(() => {
+        return new UnitTestingErrorService().execute('unittest');
+      })
+          .recover((e: Error) => ({
+            data: 'RECOVERED',
+          }))
+          .getOrNull();
+      expect(r.data).toBe('RECOVERED');
+    });
 });
