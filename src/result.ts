@@ -1,6 +1,7 @@
 /* eslint-disable new-cap */
 import {option} from 'fp-ts';
-import {none, Option, getOrElse} from 'fp-ts/lib/Option';
+import {pipe} from 'fp-ts/lib/function';
+import {none, Option, getOrElse, toNullable} from 'fp-ts/lib/Option';
 import {when} from './when';
 
 /**
@@ -143,6 +144,38 @@ export class Resultt<T> {
   }
 
   /**
+   * @param {function} transform callback function for mapping another Result.
+   * @return {Resultt<R>}
+   */
+  recover<R>(transform: (arg?: Error) => R): Resultt<R> {
+    if (this instanceof Failure) {
+      console.log(this.error);
+      return new Resultt(transform(this.error));
+    }
+    if (this.isSuccess() && option.isSome(this._value)) {
+      const v: unknown = this._value.value as unknown;
+      return new Resultt<R>(v as R);
+    }
+    throw new Error('"Recover" cannot apply for the value of this class');
+  }
+
+  /**
+   * @param {function} transform callback function for mapping another Result.
+   * @return {Resultt<R>}
+   */
+  recoverCatching<R>(transform: (arg?: Error) => R): Resultt<R> {
+    if (this instanceof Failure) {
+      const e = this.error;
+      return Resultt.runCatching(() => transform(e));
+    }
+    if (this.isSuccess() && option.isSome(this._value)) {
+      const v: unknown = this._value.value as unknown;
+      return new Resultt<R>(v as R);
+    }
+    throw new Error('"Recover" cannot apply for the value of this class');
+  }
+
+  /**
    * Get a value of this result or throw error if not.
    * @param {Error} e Some Error if want.
    * No parameter passed throw default Error.
@@ -194,7 +227,11 @@ export class Resultt<T> {
    */
   getOrNull(): T | null {
     return when(this)
-        .on((v: Resultt<T>) => v.isSuccess(), () => this._value)
+        .on((v: Resultt<T>) => v.isSuccess(), () =>
+          (pipe(
+              toNullable(this._value),
+          )),
+        )
         .else(() => null);
   }
 
@@ -203,9 +240,6 @@ export class Resultt<T> {
    * @return {string}
    */
   toString(): string {
-    if (this.isFailure()) {
-
-    }
     return `Success${this._value}`;
   }
 
