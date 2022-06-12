@@ -23,10 +23,18 @@ describe('Result test', () => {
      */
     class UnitTestingErrorService {
       /**
+       * Always throw error
        * @param {string} _value
        */
       execute(_value: string): UnitTestingResponse {
         throw new Error('Application failed on unit testing.');
+      }
+      /**
+       * Always throw error
+       * @param {string} _value
+       */
+      run(_value: string): UnitTestingResponse {
+        throw new Error('Error occuerd again!');
       }
     }
 
@@ -191,5 +199,26 @@ describe('Result test', () => {
 
       expect(r.getOrNull()).toBeNull();
       expect(r.isFailure()).toBeTruthy();
+    });
+
+    it('can recover', () => {
+      const r = Resultt.runCatching(() => {
+        return new UnitTestingErrorService().execute('unittest');
+      })
+          .recover((e: Error) => ({
+            data: 'RECOVERED',
+          }))
+          .getOrNull();
+      expect(r.data).toBe('RECOVERED');
+    });
+
+    it('receover and handle error', () => {
+      const service = new UnitTestingErrorService();
+      const r = Resultt.runCatching(() =>(service.execute('unittest')))
+          .recoverCatching((e: Error) => (service.run('try')))
+          .onFailure((e: Error) => console.error(e))
+          .getOrElse((e: Error) => 'RECOVER CATHED');
+
+      expect(r).toBe('RECOVER CATHED');
     });
 });
