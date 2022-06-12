@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Resultt = void 0;
 var fp_ts_1 = require("fp-ts");
+var function_1 = require("fp-ts/lib/function");
 var Option_1 = require("fp-ts/lib/Option");
 var when_1 = require("./when");
 var Resultt = (function () {
@@ -84,6 +85,28 @@ var Resultt = (function () {
         }
         throw new Error('Map cannot apply for the value of this class');
     };
+    Resultt.prototype.recover = function (transform) {
+        if (this instanceof Failure) {
+            console.log(this.error);
+            return new Resultt(transform(this.error));
+        }
+        if (this.isSuccess() && fp_ts_1.option.isSome(this._value)) {
+            var v = this._value.value;
+            return new Resultt(v);
+        }
+        throw new Error('"Recover" cannot apply for the value of this class');
+    };
+    Resultt.prototype.recoverCatching = function (transform) {
+        if (this instanceof Failure) {
+            var e_1 = this.error;
+            return Resultt.runCatching(function () { return transform(e_1); });
+        }
+        if (this.isSuccess() && fp_ts_1.option.isSome(this._value)) {
+            var v = this._value.value;
+            return new Resultt(v);
+        }
+        throw new Error('"Recover" cannot apply for the value of this class');
+    };
     Resultt.prototype.getOrThrow = function (e) {
         if (this.isSuccess() && fp_ts_1.option.isSome(this._value)) {
             return this._value.value;
@@ -111,17 +134,17 @@ var Resultt = (function () {
     Resultt.prototype.getOrNull = function () {
         var _this = this;
         return (0, when_1.when)(this)
-            .on(function (v) { return v.isSuccess(); }, function () { return _this._value; })
+            .on(function (v) { return v.isSuccess(); }, function () {
+            return ((0, function_1.pipe)((0, Option_1.toNullable)(_this._value)));
+        })
             .else(function () { return null; });
     };
     Resultt.prototype.toString = function () {
-        if (this.isFailure()) {
-        }
         return "Success".concat(this._value);
     };
     Resultt.prototype.throwOnFailure = function () {
-        if (isError(this._value)) {
-            throw this._value;
+        if (this.isFailure() && fp_ts_1.option.isSome(this._value)) {
+            throw this._value.value;
         }
     };
     Resultt.runCatching = function (supplier) {
