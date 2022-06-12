@@ -37,6 +37,8 @@ Highly inspired by Kotlin Result/runCatching.
 - [mapCatching](Resultt.md#mapcatching)
 - [onFailure](Resultt.md#onfailure)
 - [onSuccess](Resultt.md#onsuccess)
+- [recover](Resultt.md#recover)
+- [recoverCatching](Resultt.md#recovercatching)
 - [throwOnFailure](Resultt.md#throwonfailure)
 - [toString](Resultt.md#tostring)
 - [failure](Resultt.md#failure)
@@ -56,7 +58,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:18](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L18)
+[result.ts:19](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L19)
 
 • **new Resultt**<`T`\>(`value`)
 
@@ -74,7 +76,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:19](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L19)
+[result.ts:20](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L20)
 
 ## Properties
 
@@ -86,7 +88,7 @@ Successed data of this object
 
 #### Defined in
 
-[result.ts:16](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L16)
+[result.ts:17](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L17)
 
 ## Methods
 
@@ -116,7 +118,7 @@ If this function cannot return another instance, throw Error.
 
 #### Defined in
 
-[result.ts:90](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L90)
+[result.ts:91](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L91)
 
 ___
 
@@ -138,7 +140,7 @@ Get the value of this result or default value in argument
 
 #### Defined in
 
-[result.ts:166](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L166)
+[result.ts:199](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L199)
 
 ___
 
@@ -167,7 +169,7 @@ Shorthand for the method `fold`.
 
 #### Defined in
 
-[result.ts:179](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L179)
+[result.ts:212](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L212)
 
 ___
 
@@ -183,7 +185,7 @@ Get the encapsulated value of this class instance if success.
 
 #### Defined in
 
-[result.ts:195](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L195)
+[result.ts:228](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L228)
 
 ___
 
@@ -205,7 +207,7 @@ Get a value of this result or throw error if not.
 
 #### Defined in
 
-[result.ts:151](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L151)
+[result.ts:184](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L184)
 
 ___
 
@@ -221,7 +223,7 @@ Return true if the result was failed.
 
 #### Defined in
 
-[result.ts:41](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L41)
+[result.ts:42](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L42)
 
 ___
 
@@ -237,7 +239,7 @@ Return true if the result was successed.
 
 #### Defined in
 
-[result.ts:49](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L49)
+[result.ts:50](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L50)
 
 ___
 
@@ -265,7 +267,7 @@ Map the result to another result, transforming by the argument.
 
 #### Defined in
 
-[result.ts:112](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L112)
+[result.ts:113](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L113)
 
 ___
 
@@ -294,7 +296,7 @@ Map the result to another result, transforming by the argument.
 
 #### Defined in
 
-[result.ts:132](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L132)
+[result.ts:133](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L133)
 
 ___
 
@@ -316,7 +318,7 @@ Set action on failure.
 
 #### Defined in
 
-[result.ts:58](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L58)
+[result.ts:59](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L59)
 
 ___
 
@@ -338,7 +340,59 @@ Set an additional action on successing
 
 #### Defined in
 
-[result.ts:75](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L75)
+[result.ts:76](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L76)
+
+___
+
+### recover
+
+▸ **recover**<`R`\>(`transform`): [`Resultt`](Resultt.md)<`R`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `R` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `transform` | (`arg?`: `Error`) => `R` | callback function for mapping another Result. |
+
+#### Returns
+
+[`Resultt`](Resultt.md)<`R`\>
+
+#### Defined in
+
+[result.ts:150](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L150)
+
+___
+
+### recoverCatching
+
+▸ **recoverCatching**<`R`\>(`transform`): [`Resultt`](Resultt.md)<`R`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `R` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `transform` | (`arg?`: `Error`) => `R` | callback function for mapping another Result. |
+
+#### Returns
+
+[`Resultt`](Resultt.md)<`R`\>
+
+#### Defined in
+
+[result.ts:166](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L166)
 
 ___
 
@@ -352,7 +406,7 @@ ___
 
 #### Defined in
 
-[result.ts:215](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L215)
+[result.ts:249](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L249)
 
 ___
 
@@ -368,7 +422,7 @@ Return the string expression of this class instance.
 
 #### Defined in
 
-[result.ts:205](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L205)
+[result.ts:242](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L242)
 
 ___
 
@@ -392,7 +446,7 @@ Failure
 
 #### Defined in
 
-[result.ts:33](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L33)
+[result.ts:34](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L34)
 
 ___
 
@@ -424,4 +478,4 @@ The result of execution in argument supplier.
 
 #### Defined in
 
-[result.ts:228](https://github.com/simonNozaki/ResultT/blob/40a5831/src/result.ts#L228)
+[result.ts:262](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L262)

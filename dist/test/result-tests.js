@@ -17,6 +17,9 @@ describe('Result test', function () {
         UnitTestingErrorService.prototype.execute = function (_value) {
             throw new Error('Application failed on unit testing.');
         };
+        UnitTestingErrorService.prototype.run = function (_value) {
+            throw new Error('Error occuerd again!');
+        };
         return UnitTestingErrorService;
     }());
     it('should call lambda on sucessed', function () {
@@ -44,6 +47,10 @@ describe('Result test', function () {
         var res = new UnitTestingService().execute('unittest');
         var result = new result_1.Resultt(res);
         expect(result.getOrThrow()).toEqual({ data: 'unittest' });
+    });
+    it('create failure manually', function () {
+        var result = result_1.Resultt.failure(new Error('Manual Error!'));
+        expect(result.isFailure()).toBe(true);
     });
     it('should fold with successing executing service class', function () {
         var count = result_1.Resultt.runCatching(function () {
@@ -83,6 +90,12 @@ describe('Result test', function () {
         });
         console.log(result);
         expect(result.isFailure()).toBe(true);
+        try {
+            expect(result.getOrThrow()).toThrowError(new Error());
+        }
+        catch (e) {
+            console.log('catch!');
+        }
     });
     it('should map result to another result on success', function () {
         var result = result_1.Resultt.runCatching(function () {
@@ -141,6 +154,24 @@ describe('Result test', function () {
         });
         expect(r.getOrNull()).toBeNull();
         expect(r.isFailure()).toBeTruthy();
+    });
+    it('can recover', function () {
+        var r = result_1.Resultt.runCatching(function () {
+            return new UnitTestingErrorService().execute('unittest');
+        })
+            .recover(function (e) { return ({
+            data: 'RECOVERED',
+        }); })
+            .getOrNull();
+        expect(r.data).toBe('RECOVERED');
+    });
+    it('receover and handle error', function () {
+        var service = new UnitTestingErrorService();
+        var r = result_1.Resultt.runCatching(function () { return (service.execute('unittest')); })
+            .recoverCatching(function (e) { return (service.run('try')); })
+            .onFailure(function (e) { return console.error(e); })
+            .getOrElse(function (e) { return 'RECOVER CATHED'; });
+        expect(r).toBe('RECOVER CATHED');
     });
 });
 //# sourceMappingURL=result-tests.js.map
