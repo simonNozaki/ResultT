@@ -2,7 +2,23 @@
 import {option} from 'fp-ts';
 import {pipe} from 'fp-ts/lib/function';
 import {none, Option, getOrElse, toNullable} from 'fp-ts/lib/Option';
+import {ValueNotFoundException} from './error';
 import {when} from './when';
+
+/**
+ * Top Level shorthand for `Resultt.runCatching(() => ())` .
+ * Force the first type parameter type of Error
+ * when the action result catch Error.
+ * @param {()} supplier function to be called
+ * @return {Resultt<any, any>} The result of execution in argument supplier.
+ */
+const runCatching = <T>(supplier: () => T): Resultt<T> => {
+  try {
+    return new Resultt<T>(supplier());
+  } catch (e) {
+    return new Failure<T>(e);
+  }
+};
 
 /**
  * Base class for runtime result.
@@ -176,6 +192,25 @@ export class Resultt<T> {
   }
 
   /**
+   *
+   * @param {Function} predicate
+   * @return {Resultt<T>}
+   */
+  filter(predicate: (t: T) => boolean): Resultt<T> {
+    if (this.isSuccess() && option.isSome(this._value)) {
+      if (predicate(this._value.value)) {
+        return this;
+      } else {
+        const e: unknown = new ValueNotFoundException(
+            `The value ${this._value.value} is not found.`,
+        );
+        return new Failure<T>(e as T);
+      }
+    }
+    return this;
+  }
+
+  /**
    * Get a value of this result or throw error if not.
    * @param {Error} e Some Error if want.
    * No parameter passed throw default Error.
@@ -260,11 +295,7 @@ export class Resultt<T> {
    * @return {Resultt<any, any>} The result of execution in argument supplier.
    */
   static runCatching<T>(supplier: () => T): Resultt<T> {
-    try {
-      return new Resultt<T>(supplier());
-    } catch (e) {
-      return new Failure<T>(e);
-    }
+    return runCatching(supplier);
   }
 }
 
