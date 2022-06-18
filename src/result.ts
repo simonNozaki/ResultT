@@ -12,7 +12,7 @@ import {when} from './when';
  * @param {()} supplier function to be called
  * @return {Resultt<any, any>} The result of execution in argument supplier.
  */
-const runCatching = <T>(supplier: () => T): Resultt<T> => {
+export const runCatching = <T>(supplier: () => T): Resultt<T> => {
   try {
     return new Resultt<T>(supplier());
   } catch (e) {
@@ -192,7 +192,9 @@ export class Resultt<T> {
   }
 
   /**
-   *
+   * Return [Failure] if the argument `predicate` is evaluated as false.
+   * Internally the method `filter` throws runtime Error
+   * `ValueNotFoundException` if the predicate is false.
    * @param {Function} predicate
    * @return {Resultt<T>}
    */
@@ -321,6 +323,15 @@ class Failure<T> extends Resultt<T> {
    */
   get error(): T {
     return this._error;
+  }
+  /**
+   * always return [Failure].
+   * @override filter
+   * @param {Function} predicate
+   * @return {Resultt<T>}
+   */
+  filter(predicate: (t: T) => boolean): Resultt<T> {
+    return this;
   }
   /**
    * @return {string}
