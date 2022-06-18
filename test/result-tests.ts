@@ -1,4 +1,4 @@
-import {Resultt} from '../src/result';
+import {Resultt, runCatching} from '../src/result';
 
 describe('Result test', () => {
     interface UnitTestingResponse {
@@ -39,10 +39,8 @@ describe('Result test', () => {
     }
 
     it('should call lambda on sucessed', () => {
-      const result: Resultt<UnitTestingResponse> =
-      Resultt.runCatching<UnitTestingResponse>(() => {
-        return new UnitTestingService().execute('unittest');
-      })
+      const result =
+      Resultt.runCatching(() => (new UnitTestingService().execute('unittest')))
           .onSuccess((v) => {
             console.log(`response => ${v}`);
           });
@@ -57,7 +55,7 @@ describe('Result test', () => {
         return new UnitTestingErrorService().execute('unittest');
       })
           .onFailure((it: Error) => {
-            // 言語仕様上はコンパイル可能だが望ましい使い方ではない(閉じた計算にするようラップしたほうがよい)
+            // The usage can work, but it's not idealy(Use `getOrElse` instedly)
             console.log(this);
             error = it.message;
           });
@@ -220,5 +218,30 @@ describe('Result test', () => {
           .getOrElse((e: Error) => 'RECOVER CATHED');
 
       expect(r).toBe('RECOVER CATHED');
+    });
+
+    it('filter on succesing and predicate returns false', () => {
+      const r = runCatching(() =>
+        (new UnitTestingService().execute('unittest')))
+          .filter((t) => t.data.length > 10)
+          .getOrElse(() => ({data: 'message is under 10'}));
+      expect(r.data).toBe('message is under 10');
+    });
+
+    it('filter on succesing and predicate returns true', () => {
+      const r = runCatching(() =>
+        (new UnitTestingService().execute('unittest')))
+          .filter((t) => t.data.length > 5)
+          .getOrElse(() => ({data: 'message is under 10'}));
+      expect(r.data).toBe('unittest');
+    });
+
+    it('filter on failed', () => {
+      const r = runCatching(() =>
+        (new UnitTestingErrorService().execute('unittest')))
+          .filter((t) => t.data.length > 10)
+          .onFailure((it: Error) => console.error(it))
+          .getOrElse(() => ({data: 'message is under 10'}));
+      expect(r.data).toBe('message is under 10');
     });
 });

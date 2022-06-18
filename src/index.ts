@@ -1,1 +1,1 @@
-export {Resultt} from './result';
+export {Resultt, runCatching} from './result';
