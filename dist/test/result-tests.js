@@ -23,9 +23,7 @@ describe('Result test', function () {
         return UnitTestingErrorService;
     }());
     it('should call lambda on sucessed', function () {
-        var result = result_1.Resultt.runCatching(function () {
-            return new UnitTestingService().execute('unittest');
-        })
+        var result = result_1.Resultt.runCatching(function () { return (new UnitTestingService().execute('unittest')); })
             .onSuccess(function (v) {
             console.log("response => ".concat(v));
         });
@@ -172,6 +170,31 @@ describe('Result test', function () {
             .onFailure(function (e) { return console.error(e); })
             .getOrElse(function (e) { return 'RECOVER CATHED'; });
         expect(r).toBe('RECOVER CATHED');
+    });
+    it('filter on succesing and predicate returns false', function () {
+        var r = (0, result_1.runCatching)(function () {
+            return (new UnitTestingService().execute('unittest'));
+        })
+            .filter(function (t) { return t.data.length > 10; })
+            .getOrElse(function () { return ({ data: 'message is under 10' }); });
+        expect(r.data).toBe('message is under 10');
+    });
+    it('filter on succesing and predicate returns true', function () {
+        var r = (0, result_1.runCatching)(function () {
+            return (new UnitTestingService().execute('unittest'));
+        })
+            .filter(function (t) { return t.data.length > 5; })
+            .getOrElse(function () { return ({ data: 'message is under 10' }); });
+        expect(r.data).toBe('unittest');
+    });
+    it('filter on failed', function () {
+        var r = (0, result_1.runCatching)(function () {
+            return (new UnitTestingErrorService().execute('unittest'));
+        })
+            .filter(function (t) { return t.data.length > 10; })
+            .onFailure(function (it) { return console.error(it); })
+            .getOrElse(function () { return ({ data: 'message is under 10' }); });
+        expect(r.data).toBe('message is under 10');
     });
 });
 //# sourceMappingURL=result-tests.js.map

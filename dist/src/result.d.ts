@@ -1,3 +1,4 @@
+export declare const runCatching: <T>(supplier: () => T) => Resultt<T>;
 export declare class Resultt<T> {
     private readonly _value;
     constructor();
@@ -12,6 +13,7 @@ export declare class Resultt<T> {
     mapCatching<R>(transform: (arg?: T) => R): Resultt<R>;
     recover<R>(transform: (arg?: Error) => R): Resultt<R>;
     recoverCatching<R>(transform: (arg?: Error) => R): Resultt<R>;
+    filter(predicate: (t: T) => boolean): Resultt<T>;
     getOrThrow(e?: Error): T;
     getOrDefault(elseValue: T): T;
     getOrElse<R>(onFailure: (earg?: Error) => R): R;
@@ -24,6 +26,7 @@ declare class Failure<T> extends Resultt<T> {
     private _error;
     constructor(_error: T);
     get error(): T;
+    filter(predicate: (t: T) => boolean): Resultt<T>;
     toString(): string;
 }
 export {};

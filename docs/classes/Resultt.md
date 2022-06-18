@@ -26,6 +26,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 ### Methods
 
+- [filter](Resultt.md#filter)
 - [fold](Resultt.md#fold)
 - [getOrDefault](Resultt.md#getordefault)
 - [getOrElse](Resultt.md#getorelse)
@@ -58,7 +59,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:19](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L19)
+[result.ts:35](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L35)
 
 • **new Resultt**<`T`\>(`value`)
 
@@ -76,7 +77,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:20](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L20)
+[result.ts:36](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L36)
 
 ## Properties
 
@@ -88,9 +89,33 @@ Successed data of this object
 
 #### Defined in
 
-[result.ts:17](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L17)
+[result.ts:33](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L33)
 
 ## Methods
+
+### filter
+
+▸ **filter**(`predicate`): [`Resultt`](Resultt.md)<`T`\>
+
+Return [Failure] if the argument `predicate` is evaluated as false.
+Internally the method `filter` throws runtime Error
+`ValueNotFoundException` if the predicate is false.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `predicate` | (`t`: `T`) => `boolean` |
+
+#### Returns
+
+[`Resultt`](Resultt.md)<`T`\>
+
+#### Defined in
+
+[result.ts:201](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L201)
+
+___
 
 ### fold
 
@@ -118,7 +143,7 @@ If this function cannot return another instance, throw Error.
 
 #### Defined in
 
-[result.ts:91](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L91)
+[result.ts:107](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L107)
 
 ___
 
@@ -140,7 +165,7 @@ Get the value of this result or default value in argument
 
 #### Defined in
 
-[result.ts:199](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L199)
+[result.ts:236](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L236)
 
 ___
 
@@ -169,7 +194,7 @@ Shorthand for the method `fold`.
 
 #### Defined in
 
-[result.ts:212](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L212)
+[result.ts:249](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L249)
 
 ___
 
@@ -185,7 +210,7 @@ Get the encapsulated value of this class instance if success.
 
 #### Defined in
 
-[result.ts:228](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L228)
+[result.ts:265](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L265)
 
 ___
 
@@ -207,7 +232,7 @@ Get a value of this result or throw error if not.
 
 #### Defined in
 
-[result.ts:184](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L184)
+[result.ts:221](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L221)
 
 ___
 
@@ -223,7 +248,7 @@ Return true if the result was failed.
 
 #### Defined in
 
-[result.ts:42](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L42)
+[result.ts:58](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L58)
 
 ___
 
@@ -239,7 +264,7 @@ Return true if the result was successed.
 
 #### Defined in
 
-[result.ts:50](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L50)
+[result.ts:66](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L66)
 
 ___
 
@@ -267,7 +292,7 @@ Map the result to another result, transforming by the argument.
 
 #### Defined in
 
-[result.ts:113](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L113)
+[result.ts:129](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L129)
 
 ___
 
@@ -296,7 +321,7 @@ Map the result to another result, transforming by the argument.
 
 #### Defined in
 
-[result.ts:133](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L133)
+[result.ts:149](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L149)
 
 ___
 
@@ -318,7 +343,7 @@ Set action on failure.
 
 #### Defined in
 
-[result.ts:59](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L59)
+[result.ts:75](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L75)
 
 ___
 
@@ -340,7 +365,7 @@ Set an additional action on successing
 
 #### Defined in
 
-[result.ts:76](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L76)
+[result.ts:92](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L92)
 
 ___
 
@@ -366,7 +391,7 @@ ___
 
 #### Defined in
 
-[result.ts:150](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L150)
+[result.ts:166](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L166)
 
 ___
 
@@ -392,7 +417,7 @@ ___
 
 #### Defined in
 
-[result.ts:166](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L166)
+[result.ts:182](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L182)
 
 ___
 
@@ -406,7 +431,7 @@ ___
 
 #### Defined in
 
-[result.ts:249](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L249)
+[result.ts:286](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L286)
 
 ___
 
@@ -422,7 +447,7 @@ Return the string expression of this class instance.
 
 #### Defined in
 
-[result.ts:242](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L242)
+[result.ts:279](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L279)
 
 ___
 
@@ -446,7 +471,7 @@ Failure
 
 #### Defined in
 
-[result.ts:34](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L34)
+[result.ts:50](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L50)
 
 ___
 
@@ -478,4 +503,4 @@ The result of execution in argument supplier.
 
 #### Defined in
 
-[result.ts:262](https://github.com/simonNozaki/ResultT/blob/06bea08/src/result.ts#L262)
+[result.ts:299](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L299)

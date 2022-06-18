@@ -15,11 +15,21 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Resultt = void 0;
+exports.Resultt = exports.runCatching = void 0;
 var fp_ts_1 = require("fp-ts");
 var function_1 = require("fp-ts/lib/function");
 var Option_1 = require("fp-ts/lib/Option");
+var error_1 = require("./error");
 var when_1 = require("./when");
+var runCatching = function (supplier) {
+    try {
+        return new Resultt(supplier());
+    }
+    catch (e) {
+        return new Failure(e);
+    }
+};
+exports.runCatching = runCatching;
 var Resultt = (function () {
     function Resultt(value) {
         this._value = value ? fp_ts_1.option.of(value) : Option_1.none;
@@ -107,6 +117,18 @@ var Resultt = (function () {
         }
         throw new Error('"Recover" cannot apply for the value of this class');
     };
+    Resultt.prototype.filter = function (predicate) {
+        if (this.isSuccess() && fp_ts_1.option.isSome(this._value)) {
+            if (predicate(this._value.value)) {
+                return this;
+            }
+            else {
+                var e = new error_1.ValueNotFoundException("The value ".concat(this._value.value, " is not found."));
+                return new Failure(e);
+            }
+        }
+        return this;
+    };
     Resultt.prototype.getOrThrow = function (e) {
         if (this.isSuccess() && fp_ts_1.option.isSome(this._value)) {
             return this._value.value;
@@ -148,12 +170,7 @@ var Resultt = (function () {
         }
     };
     Resultt.runCatching = function (supplier) {
-        try {
-            return new Resultt(supplier());
-        }
-        catch (e) {
-            return new Failure(e);
-        }
+        return (0, exports.runCatching)(supplier);
     };
     return Resultt;
 }());
@@ -178,6 +195,9 @@ var Failure = (function (_super) {
         enumerable: false,
         configurable: true
     });
+    Failure.prototype.filter = function (predicate) {
+        return this;
+    };
     Failure.prototype.toString = function () {
         return "Error".concat(this._error);
     };
