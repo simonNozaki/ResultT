@@ -1,7 +1,7 @@
-[![CircleCI](https://circleci.com/gh/simonNozaki/ResultT/tree/main.svg?style=svg)](https://circleci.com/gh/simonNozaki/ResultT/tree/main)
+[![CircleCI](https://circleci.com/gh/simonNozaki/resultify/tree/main.svg?style=svg)](https://circleci.com/gh/simonNozaki/resultify/tree/main)
 ![NPM](https://img.shields.io/npm/l/@snozaki/result-ts)
 
-# result-ts
+# resultify
 This project was developed to wrap processes that might raise exceptions and to handle the results declaratively and safely.
 The basic control syntax of TypeScript is a "statement". Therefore, the scope of an expression changes before and after a statement, and the process of initializing -> assigning a variable is written.
 Not only in TypeScript, but also in classical procedural programming, you will often write code like the following
@@ -25,18 +25,26 @@ However, the methods that can be easily described in kotlin and scala are a bit 
 ## Install
 From npm registry...
 ```
-npm i @snozaki/result-ts
+npm i @snozaki/resultify
 ```
 type declaration is included.
 
-class import...
+***This repository is moved to `@snozaki/resultify` , so [`ResultT`](https://www.npmjs.com/package/resultt) is depricated.***
+
+## Getting started
+You can simply introduce this library by import.
+
+Try to import `runCatching` and pass a higher function to wrap the result.
+
 ```typescript
-import { Resultt, runCatching } from 'resultt';
+import { runCatching } from 'resultt';
+
+const result = runCatching(() => execute());
 ```
 
 ## Usage
+Given sample logic and response interface...
 ```typescript
-// sample logic and response interface
 interface Response {
     data: string
 }
@@ -53,22 +61,17 @@ Try to start from `runCatching` method. This wraps the result of success or fail
 We can handle values to call like `getOrThrow` , `getOrElse` , `getOrDefault` and so on.
 ```typescript
 // execute some function and wrap by "runCatching"
-const result: Result<Response> = Result.runCatching(() => {
-        return new Service().execute('execution');
-    })
+const result: Resultt<Response> = runCatching(() => new Service().execute('execution'))
+    // It should be executed "onSuccess".
     .onSuccess((v) => {
         console.log(`response => ${v}`);
-        return v
     });
     .onFailure((it: Error) => {
         console.error(it);
-        return {
-            data: 'DEFAULT'
-        };
     });
 
 // You may get the value of execute by "get" functions as declarative.
-const v1 = result.getOrThrow();  // => success ... { data: execution }
+const v1 = result.getOrThrow();  // => success ... { data: "execution" }
 const v2 = result.getOrDefault({
     data: 'OTHER'
 });
@@ -80,7 +83,7 @@ if (result.isSuccess()) {
 }
 ```
 
-On the way to get tthe raw value, we can insert some intermediate processes by `onSucess` or `onFailure`.
+On the way to get the raw value, we can insert some intermediate processes by `onSucess` or `onFailure`.
 
 ### Folding, mapping result
 The process wrapped `Resultt` can fold or map another value or `Resultt` .
@@ -101,7 +104,7 @@ const folded = runCatching(() => (new Service().execute('execution')))
 console.log(folded);  // => 9
 
 // Or, shorthand for fold with getOrElse
-const n: number = Result.runCatching(() => {
+const n: number = runCatching(() => {
         return new Service().execute('execution');
     })
     .getOrElse((it: Error) => {
@@ -112,6 +115,30 @@ const n: number = Result.runCatching(() => {
 console.log(n);  // => 9
 ```
 
+### Recovery
+In the same way of `map` and `fold`, `recover` also provides mapping funtion when the original expression falls into `Failure`.
+```typescript
+const r = runCatching(() => new Service().execute('execution'))
+          .recover((e: Error) => ({
+            data: 'RECOVERED',
+          }))
+          .getOrThrow();
+console.log(r);  // => { data: 'RECOVERED' }
+```
+
+`recover` does not catch Error when the transformation function throws Error. If it wraps by `Resultt`, use `recoverCatching`.
+
+
+### Filter
+Even though an original expression or block is executed successfully, a result value is not always expected value. The executed value is tested  by `filter` like below.
+```typescript
+const r = runCatching(() =>
+        (new Service().execute('execution')))
+          .filter((t) => t.data.length > 10)
+          .getOrElse(() => ({data: 'message is under 10'}));
+
+console.log(r);  // => {data: 'message is under 10'}
+```
 
 ## For more info...
 Full class documentation is here: [docs](https://github.com/simonNozaki/ResultT/blob/main/docs/classes/Resultt.md)
