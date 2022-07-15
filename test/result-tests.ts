@@ -244,4 +244,27 @@ describe('Result test', () => {
           .getOrElse(() => ({data: 'message is under 10'}));
       expect(r.data).toBe('message is under 10');
     });
+
+    it('print lastly on success', () => {
+      const result = runCatching(
+          () => (new UnitTestingService().execute('unittest')),
+      )
+          .onSuccess((v) => {
+            console.log(`response => ${v.data}`);
+          })
+          .andLastly(() => {
+            console.log('End service calling');
+          });
+      expect(result.getOrDefault({data: 'DEFAULT'}).data).toBe('unittest');
+    });
+
+    it('print lastly on failed', () => {
+      const r = runCatching(() =>
+        (new UnitTestingErrorService().execute('unittest')))
+          .andLastly(() => {
+            console.log('End service calling');
+          });
+      const value = r.getOrDefault({data: 'DEFAULT'}).data;
+      expect(value).toBe('DEFAULT');
+    });
 });

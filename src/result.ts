@@ -152,7 +152,7 @@ export class Resultt<T> {
         this._value.value : null;
       return Resultt.runCatching(() => transform(optionalValue));
     }
-    if (option.isSome(this._value) && isError(this._value.value)) {
+    if (this.isFailure() && option.isSome(this._value)) {
       const v: unknown = this._value.value as unknown;
       return new Failure<R>(v as R);
     }
@@ -209,6 +209,16 @@ export class Resultt<T> {
         return new Failure<T>(e as T);
       }
     }
+    return this;
+  }
+
+  /**
+   *
+   * @param {Function} consumer
+   * @return {Resultt<T>}
+   */
+  andLastly(consumer: () => void): Resultt<T> {
+    consumer();
     return this;
   }
 
@@ -308,11 +318,11 @@ const isError = (arg: unknown): arg is Error => {
 /**
  * Result of failure. This class is instanciated on catching an error
  */
-class Failure<T> extends Resultt<T> {
+class Failure<Error> extends Resultt<Error> {
   /**
    * @param {Error} _error
    */
-  constructor(private _error: T) {
+  constructor(private _error: Error) {
     super(_error);
     if (!isError(_error)) {
       throw new Error('Failure must have the value of Error.');
@@ -321,7 +331,7 @@ class Failure<T> extends Resultt<T> {
   /**
    * @return {Error}
    */
-  get error(): T {
+  get error(): Error {
     return this._error;
   }
   /**
@@ -330,7 +340,16 @@ class Failure<T> extends Resultt<T> {
    * @param {Function} predicate
    * @return {Resultt<T>}
    */
-  filter(predicate: (t: T) => boolean): Resultt<T> {
+  filter(predicate: (t: Error) => boolean): Resultt<Error> {
+    return this;
+  }
+  /**
+   *
+   * @param {Function} consumer
+   * @return {Resultt<Error>}
+   */
+  andLastly(consumer: () => void): Resultt<Error> {
+    consumer();
     return this;
   }
   /**
