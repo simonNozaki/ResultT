@@ -1,6 +1,6 @@
-[resultt](README.md) / Exports
+[@snozaki/resultify](README.md) / Exports
 
-# resultt
+# @snozaki/resultify
 
 ## Table of contents
 
@@ -42,4 +42,4 @@ The result of execution in argument supplier.
 
 #### Defined in
 
-[result.ts:15](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L15)
+[result.ts:15](https://github.com/simonNozaki/resultify/blob/b7a902c/src/result.ts#L15)

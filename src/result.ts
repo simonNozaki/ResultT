@@ -213,7 +213,7 @@ export class Resultt<T> {
   }
 
   /**
-   *
+   * Return Resultt instance with doing `consumer`.
    * @param {Function} consumer
    * @return {Resultt<T>}
    */
@@ -344,7 +344,7 @@ class Failure<Error> extends Resultt<Error> {
     return this;
   }
   /**
-   *
+   * Return Resultt instance with doing `consumer`.
    * @param {Function} consumer
    * @return {Resultt<Error>}
    */

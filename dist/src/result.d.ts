@@ -14,6 +14,7 @@ export declare class Resultt<T> {
     recover<R>(transform: (arg?: Error) => R): Resultt<R>;
     recoverCatching<R>(transform: (arg?: Error) => R): Resultt<R>;
     filter(predicate: (t: T) => boolean): Resultt<T>;
+    andLastly(consumer: () => void): Resultt<T>;
     getOrThrow(e?: Error): T;
     getOrDefault(elseValue: T): T;
     getOrElse<R>(onFailure: (earg?: Error) => R): R;
@@ -22,11 +23,12 @@ export declare class Resultt<T> {
     private throwOnFailure;
     static runCatching<T>(supplier: () => T): Resultt<T>;
 }
-declare class Failure<T> extends Resultt<T> {
+declare class Failure<Error> extends Resultt<Error> {
     private _error;
-    constructor(_error: T);
-    get error(): T;
-    filter(predicate: (t: T) => boolean): Resultt<T>;
+    constructor(_error: Error);
+    get error(): Error;
+    filter(predicate: (t: Error) => boolean): Resultt<Error>;
+    andLastly(consumer: () => void): Resultt<Error>;
     toString(): string;
 }
 export {};

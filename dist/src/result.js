@@ -89,7 +89,7 @@ var Resultt = (function () {
                 this._value.value : null;
             return Resultt.runCatching(function () { return transform(optionalValue_1); });
         }
-        if (fp_ts_1.option.isSome(this._value) && isError(this._value.value)) {
+        if (this.isFailure() && fp_ts_1.option.isSome(this._value)) {
             var v = this._value.value;
             return new Failure(v);
         }
@@ -127,6 +127,10 @@ var Resultt = (function () {
                 return new Failure(e);
             }
         }
+        return this;
+    };
+    Resultt.prototype.andLastly = function (consumer) {
+        consumer();
         return this;
     };
     Resultt.prototype.getOrThrow = function (e) {
@@ -196,6 +200,10 @@ var Failure = (function (_super) {
         configurable: true
     });
     Failure.prototype.filter = function (predicate) {
+        return this;
+    };
+    Failure.prototype.andLastly = function (consumer) {
+        consumer();
         return this;
     };
     Failure.prototype.toString = function () {
