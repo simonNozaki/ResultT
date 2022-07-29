@@ -1,6 +1,6 @@
 {
   "name": "@snozaki/resultify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Type-safe runtime wrapping library",
   "typings": "dist/src/index.d.ts",
   "main": "dist/src/index.js",
@@ -20,7 +20,9 @@
   "author": "Simon Nozaki <tldk1993@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "fp-ts": "^2.12.1"
+    "@types/underscore": "^1.11.4",
+    "fp-ts": "^2.12.1",
+    "underscore": "^1.13.4"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
