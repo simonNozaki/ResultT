@@ -196,5 +196,25 @@ describe('Result test', function () {
             .getOrElse(function () { return ({ data: 'message is under 10' }); });
         expect(r.data).toBe('message is under 10');
     });
+    it('print lastly on success', function () {
+        var result = (0, result_1.runCatching)(function () { return (new UnitTestingService().execute('unittest')); })
+            .onSuccess(function (v) {
+            console.log("response => ".concat(v.data));
+        })
+            .andLastly(function () {
+            console.log('End service calling');
+        });
+        expect(result.getOrDefault({ data: 'DEFAULT' }).data).toBe('unittest');
+    });
+    it('print lastly on failed', function () {
+        var r = (0, result_1.runCatching)(function () {
+            return (new UnitTestingErrorService().execute('unittest'));
+        })
+            .andLastly(function () {
+            console.log('End service calling');
+        });
+        var value = r.getOrDefault({ data: 'DEFAULT' }).data;
+        expect(value).toBe('DEFAULT');
+    });
 });
 //# sourceMappingURL=result-tests.js.map

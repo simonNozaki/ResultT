@@ -1,7 +1,7 @@
 /* eslint-disable new-cap */
 import {option} from 'fp-ts';
 import {pipe} from 'fp-ts/lib/function';
-import {none, Option, getOrElse, toNullable} from 'fp-ts/lib/Option';
+import {none, Option, getOrElse, toNullable, match} from 'fp-ts/lib/Option';
 import {ValueNotFoundException} from './error';
 import {when} from './when';
 
@@ -199,21 +199,24 @@ export class Resultt<T> {
    * @return {Resultt<T>}
    */
   filter(predicate: (t: T) => boolean): Resultt<T> {
-    if (this.isSuccess() && option.isSome(this._value)) {
-      if (predicate(this._value.value)) {
-        return this;
-      } else {
-        const e: unknown = new ValueNotFoundException(
-            `The value ${this._value.value} is not found.`,
-        );
-        return new Failure<T>(e as T);
-      }
+    if (this.isSuccess()) {
+      return pipe(
+          this._value,
+          match(
+              () => (this.getFailure('The value is not found.')),
+              (t: T) => {
+                return when(t)
+                    .on((v) => predicate(v), () => new Resultt(t))
+                    .else(() => (this.getFailure('The value is not found.')));
+              },
+          ),
+      );
     }
     return this;
   }
 
   /**
-   *
+   * Return Resultt instance with doing `consumer`.
    * @param {Function} consumer
    * @return {Resultt<T>}
    */
@@ -300,6 +303,16 @@ export class Resultt<T> {
   }
 
   /**
+   * Get `Failure` instance initialized with `ValueNotFoundException` .
+   * @param {string} message
+   * @return {Failure<T>}
+   */
+  private getFailure = <T>(message: string): Failure<T> => {
+    const e: unknown = new ValueNotFoundException(message);
+    return new Failure<T>(e as T);
+  };
+
+  /**
    * Wrapping actions and return Result instance.
    * Force the first type parameter type of Error
    * when the action result catch Error.
@@ -344,7 +357,7 @@ class Failure<Error> extends Resultt<Error> {
     return this;
   }
   /**
-   *
+   * Return Resultt instance with doing `consumer`.
    * @param {Function} consumer
    * @return {Resultt<Error>}
    */

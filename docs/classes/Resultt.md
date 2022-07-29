@@ -1,4 +1,4 @@
-[resultt](../README.md) / [Exports](../modules.md) / Resultt
+[@snozaki/resultify](../README.md) / [Exports](../modules.md) / Resultt
 
 # Class: Resultt<T\>
 
@@ -26,8 +26,10 @@ Highly inspired by Kotlin Result/runCatching.
 
 ### Methods
 
+- [andLastly](Resultt.md#andlastly)
 - [filter](Resultt.md#filter)
 - [fold](Resultt.md#fold)
+- [getFailure](Resultt.md#getfailure)
 - [getOrDefault](Resultt.md#getordefault)
 - [getOrElse](Resultt.md#getorelse)
 - [getOrNull](Resultt.md#getornull)
@@ -59,7 +61,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:35](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L35)
+[result.ts:35](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L35)
 
 • **new Resultt**<`T`\>(`value`)
 
@@ -77,7 +79,7 @@ Highly inspired by Kotlin Result/runCatching.
 
 #### Defined in
 
-[result.ts:36](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L36)
+[result.ts:36](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L36)
 
 ## Properties
 
@@ -89,9 +91,31 @@ Successed data of this object
 
 #### Defined in
 
-[result.ts:33](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L33)
+[result.ts:33](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L33)
 
 ## Methods
+
+### andLastly
+
+▸ **andLastly**(`consumer`): [`Resultt`](Resultt.md)<`T`\>
+
+Return Resultt instance with doing `consumer`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `consumer` | () => `void` |
+
+#### Returns
+
+[`Resultt`](Resultt.md)<`T`\>
+
+#### Defined in
+
+[result.ts:223](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L223)
+
+___
 
 ### filter
 
@@ -113,7 +137,7 @@ Internally the method `filter` throws runtime Error
 
 #### Defined in
 
-[result.ts:201](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L201)
+[result.ts:201](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L201)
 
 ___
 
@@ -143,7 +167,35 @@ If this function cannot return another instance, throw Error.
 
 #### Defined in
 
-[result.ts:107](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L107)
+[result.ts:107](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L107)
+
+___
+
+### getFailure
+
+▸ `Private` **getFailure**<`T`\>(`message`): `Failure`<`T`\>
+
+Get `Failure` instance initialized with `ValueNotFoundException` .
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | `string` |
+
+#### Returns
+
+`Failure`<`T`\>
+
+#### Defined in
+
+[result.ts:310](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L310)
 
 ___
 
@@ -165,7 +217,7 @@ Get the value of this result or default value in argument
 
 #### Defined in
 
-[result.ts:236](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L236)
+[result.ts:249](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L249)
 
 ___
 
@@ -194,7 +246,7 @@ Shorthand for the method `fold`.
 
 #### Defined in
 
-[result.ts:249](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L249)
+[result.ts:262](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L262)
 
 ___
 
@@ -210,7 +262,7 @@ Get the encapsulated value of this class instance if success.
 
 #### Defined in
 
-[result.ts:265](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L265)
+[result.ts:278](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L278)
 
 ___
 
@@ -232,7 +284,7 @@ Get a value of this result or throw error if not.
 
 #### Defined in
 
-[result.ts:221](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L221)
+[result.ts:234](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L234)
 
 ___
 
@@ -248,7 +300,7 @@ Return true if the result was failed.
 
 #### Defined in
 
-[result.ts:58](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L58)
+[result.ts:58](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L58)
 
 ___
 
@@ -264,7 +316,7 @@ Return true if the result was successed.
 
 #### Defined in
 
-[result.ts:66](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L66)
+[result.ts:66](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L66)
 
 ___
 
@@ -292,7 +344,7 @@ Map the result to another result, transforming by the argument.
 
 #### Defined in
 
-[result.ts:129](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L129)
+[result.ts:129](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L129)
 
 ___
 
@@ -321,7 +373,7 @@ Map the result to another result, transforming by the argument.
 
 #### Defined in
 
-[result.ts:149](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L149)
+[result.ts:149](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L149)
 
 ___
 
@@ -343,7 +395,7 @@ Set action on failure.
 
 #### Defined in
 
-[result.ts:75](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L75)
+[result.ts:75](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L75)
 
 ___
 
@@ -365,7 +417,7 @@ Set an additional action on successing
 
 #### Defined in
 
-[result.ts:92](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L92)
+[result.ts:92](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L92)
 
 ___
 
@@ -391,7 +443,7 @@ ___
 
 #### Defined in
 
-[result.ts:166](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L166)
+[result.ts:166](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L166)
 
 ___
 
@@ -417,7 +469,7 @@ ___
 
 #### Defined in
 
-[result.ts:182](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L182)
+[result.ts:182](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L182)
 
 ___
 
@@ -431,7 +483,7 @@ ___
 
 #### Defined in
 
-[result.ts:286](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L286)
+[result.ts:299](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L299)
 
 ___
 
@@ -447,7 +499,7 @@ Return the string expression of this class instance.
 
 #### Defined in
 
-[result.ts:279](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L279)
+[result.ts:292](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L292)
 
 ___
 
@@ -471,7 +523,7 @@ Failure
 
 #### Defined in
 
-[result.ts:50](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L50)
+[result.ts:50](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L50)
 
 ___
 
@@ -503,4 +555,4 @@ The result of execution in argument supplier.
 
 #### Defined in
 
-[result.ts:299](https://github.com/simonNozaki/ResultT/blob/11a7626/src/result.ts#L299)
+[result.ts:322](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L322)

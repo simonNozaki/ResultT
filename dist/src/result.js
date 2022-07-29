@@ -32,6 +32,10 @@ var runCatching = function (supplier) {
 exports.runCatching = runCatching;
 var Resultt = (function () {
     function Resultt(value) {
+        this.getFailure = function (message) {
+            var e = new error_1.ValueNotFoundException(message);
+            return new Failure(e);
+        };
         this._value = value ? fp_ts_1.option.of(value) : Option_1.none;
     }
     Resultt.failure = function (error) {
@@ -89,7 +93,7 @@ var Resultt = (function () {
                 this._value.value : null;
             return Resultt.runCatching(function () { return transform(optionalValue_1); });
         }
-        if (fp_ts_1.option.isSome(this._value) && isError(this._value.value)) {
+        if (this.isFailure() && fp_ts_1.option.isSome(this._value)) {
             var v = this._value.value;
             return new Failure(v);
         }
@@ -118,15 +122,18 @@ var Resultt = (function () {
         throw new Error('"Recover" cannot apply for the value of this class');
     };
     Resultt.prototype.filter = function (predicate) {
-        if (this.isSuccess() && fp_ts_1.option.isSome(this._value)) {
-            if (predicate(this._value.value)) {
-                return this;
-            }
-            else {
-                var e = new error_1.ValueNotFoundException("The value ".concat(this._value.value, " is not found."));
-                return new Failure(e);
-            }
+        var _this = this;
+        if (this.isSuccess()) {
+            return (0, function_1.pipe)(this._value, (0, Option_1.match)(function () { return (_this.getFailure('The value is not found.')); }, function (t) {
+                return (0, when_1.when)(t)
+                    .on(function (v) { return predicate(v); }, function () { return new Resultt(t); })
+                    .else(function () { return (_this.getFailure('The value is not found.')); });
+            }));
         }
+        return this;
+    };
+    Resultt.prototype.andLastly = function (consumer) {
+        consumer();
         return this;
     };
     Resultt.prototype.getOrThrow = function (e) {
@@ -196,6 +203,10 @@ var Failure = (function (_super) {
         configurable: true
     });
     Failure.prototype.filter = function (predicate) {
+        return this;
+    };
+    Failure.prototype.andLastly = function (consumer) {
+        consumer();
         return this;
     };
     Failure.prototype.toString = function () {

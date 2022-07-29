@@ -1,5 +1,5 @@
 [![CircleCI](https://circleci.com/gh/simonNozaki/resultify/tree/main.svg?style=svg)](https://circleci.com/gh/simonNozaki/resultify/tree/main)
-![NPM](https://img.shields.io/npm/l/@snozaki/result-ts)
+![NPM](https://img.shields.io/npm/l/@snozaki/resultify)
 
 # resultify
 This project was developed to wrap processes that might raise exceptions and to handle the results declaratively and safely.
@@ -68,7 +68,8 @@ const result: Resultt<Response> = runCatching(() => new Service().execute('execu
     });
     .onFailure((it: Error) => {
         console.error(it);
-    });
+    })
+    .andLastly(() => console.log('End service calling'));
 
 // You may get the value of execute by "get" functions as declarative.
 const v1 = result.getOrThrow();  // => success ... { data: "execution" }
@@ -138,6 +139,15 @@ const r = runCatching(() =>
           .getOrElse(() => ({data: 'message is under 10'}));
 
 console.log(r);  // => {data: 'message is under 10'}
+```
+
+`filter` method can be used with some helper `eq`(equal) and `ne`(not equal). `eq` and `ne` can check deeply equally.
+```typescript
+const r = runCatching(() =>
+        (new Service().execute('execution')))
+          .filter(eq({data: 'execution'}));
+
+console.log(r.isSuccess());  // => true
 ```
 
 ## For more info...
