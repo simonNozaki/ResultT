@@ -141,5 +141,14 @@ const r = runCatching(() =>
 console.log(r);  // => {data: 'message is under 10'}
 ```
 
+`filter` method can be used with some helper `eq`(equal) and `ne`(not equal). `eq` and `ne` can check deeply equally.
+```typescript
+const r = runCatching(() =>
+        (new Service().execute('execution')))
+          .filter(eq({data: 'execution'}));
+
+console.log(r.isSuccess());  // => true
+```
+
 ## For more info...
 Full class documentation is here: [docs](https://github.com/simonNozaki/ResultT/blob/main/docs/classes/Resultt.md)

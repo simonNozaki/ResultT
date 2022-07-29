@@ -21,6 +21,7 @@ export declare class Resultt<T> {
     getOrNull(): T | null;
     toString(): string;
     private throwOnFailure;
+    private getFailure;
     static runCatching<T>(supplier: () => T): Resultt<T>;
 }
 declare class Failure<Error> extends Resultt<Error> {

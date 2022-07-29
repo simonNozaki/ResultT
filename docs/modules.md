@@ -42,4 +42,4 @@ The result of execution in argument supplier.
 
 #### Defined in
 
-[result.ts:15](https://github.com/simonNozaki/resultify/blob/b7a902c/src/result.ts#L15)
+[result.ts:15](https://github.com/simonNozaki/resultify/blob/6be9a5a/src/result.ts#L15)
