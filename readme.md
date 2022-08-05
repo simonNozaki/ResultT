@@ -86,6 +86,26 @@ if (result.isSuccess()) {
 
 On the way to get the raw value, we can insert some intermediate processes by `onSucess` or `onFailure`.
 
+### Utility helper for higher kind functions
+This project provides some helpers for higher kind functions to shortcut like a function `() => T`.
+
+```typescript
+const r = runCatching(supply(new Application().execute()))
+    .fold(
+        supply('success'),
+        onErrorThen('failure'),
+    );
+```
+
+- `supply` ... create a function that return value instantly.
+- `onErrorThen` ... create a function that partially apply `v` and return value.
+
+For filters, `eq` and `ne` can be used. `eq` and `ne` compare recursively, so that it is possible to compare object or array.
+
+```typescript
+const r = new Resultt('unittest').filter(eq('unit'));
+```
+
 ### Folding, mapping result
 The process wrapped `Resultt` can fold or map another value or `Resultt` .
 
