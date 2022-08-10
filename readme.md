@@ -86,7 +86,7 @@ if (result.isSuccess()) {
 
 On the way to get the raw value, we can insert some intermediate processes by `onSucess` or `onFailure`.
 
-### Utility helper for higher kind functions
+### Utility helper for function expressions
 This project provides some helpers for higher kind functions to shortcut like a function `() => T`.
 
 ```typescript
@@ -171,4 +171,4 @@ console.log(r.isSuccess());  // => true
 ```
 
 ## For more info...
-Full class documentation is here: [docs](https://github.com/simonNozaki/ResultT/blob/main/docs/classes/Resultt.md)
+Full class documentation is here: [docs](https://simonnozaki.github.io/resultify/)
