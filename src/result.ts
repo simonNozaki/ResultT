@@ -216,6 +216,20 @@ export class Resultt<T> {
   }
 
   /**
+   * Return [Failure] if a value of this `Resultt` instance is null;
+   * @return {Resultt<T>}
+   */
+  filterNotNull(): Resultt<T> {
+    return pipe(
+        this._value,
+        match(
+            () => (this.getFailure('The value is null')),
+            (t: T) => (new Resultt(t)),
+        ),
+    );
+  }
+
+  /**
    * Return Resultt instance with doing `consumer`.
    * @param {Function} consumer
    * @return {Resultt<T>}
