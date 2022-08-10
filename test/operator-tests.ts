@@ -2,7 +2,9 @@ import {eq, onErrorThen, ne, supply} from '../src/operator';
 import {Resultt, runCatching} from '../src';
 
 describe('Operator test', () => {
+  // eslint-disable-next-line require-jsdoc
   class Application {
+    // eslint-disable-next-line require-jsdoc
     execute() {
       return 'unit test';
     }

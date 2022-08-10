@@ -132,6 +132,10 @@ var Resultt = (function () {
         }
         return this;
     };
+    Resultt.prototype.filterNotNull = function () {
+        var _this = this;
+        return (0, function_1.pipe)(this._value, (0, Option_1.match)(function () { return (_this.getFailure('The value is null')); }, function (t) { return (new Resultt(t)); }));
+    };
     Resultt.prototype.andLastly = function (consumer) {
         consumer();
         return this;

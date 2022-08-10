@@ -14,6 +14,7 @@ export declare class Resultt<T> {
     recover<R>(transform: (arg?: Error) => R): Resultt<R>;
     recoverCatching<R>(transform: (arg?: Error) => R): Resultt<R>;
     filter(predicate: (t: T) => boolean): Resultt<T>;
+    filterNotNull(): Resultt<T>;
     andLastly(consumer: () => void): Resultt<T>;
     getOrThrow(e?: Error): T;
     getOrDefault(elseValue: T): T;
