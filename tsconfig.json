@@ -20,7 +20,10 @@
     "types": [
       "node",
       "jest"
-    ]
+    ],
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": [
     "src/**/*.ts",
