@@ -1,0 +1,8 @@
+{
+  "name": "@snozaki/resultify-example",
+  "version": "0.0.1",
+  "description": "Example project for @snozaki/resultify",
+  "main": "index.js",
+  "author": "Simon Nozaki <tldk1993@gmail.com>",
+  "license": "MIT"
+}
