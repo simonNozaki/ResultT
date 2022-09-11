@@ -90,6 +90,9 @@ export class Resultt<T> {
    * @return {Resultt<T, E>}
    */
   onSuccess(consumer: (arg: T) => void): Resultt<T> {
+    if (this.isFailure()) {
+      return this;
+    }
     if (option.isSome(this._value)) {
       consumer(this._value.value);
     }
@@ -160,12 +163,14 @@ export class Resultt<T> {
   }
 
   /**
+   * Process a passed callback function and rerturn value
+   * if this `Resultt` is failure, so there is nothing happenning when this
+   * is success.
    * @param {function} transform callback function for mapping another Result.
    * @return {Resultt<R>}
    */
   recover<R>(transform: (arg?: Error) => R): Resultt<R> {
     if (this instanceof Failure) {
-      console.log(this.error);
       return new Resultt(transform(this.error));
     }
     if (this.isSuccess() && option.isSome(this._value)) {
@@ -176,6 +181,12 @@ export class Resultt<T> {
   }
 
   /**
+   * Process a passed callback function and rerturn value
+   * if this `Resultt` is failure.
+   *
+   * Noet: {@link recover} is different from this method at the point that
+   * {@link recoverCatching} does not throw an error
+   * on processing a callback function.
    * @param {function} transform callback function for mapping another Result.
    * @return {Resultt<R>}
    */
