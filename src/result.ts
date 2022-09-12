@@ -112,15 +112,29 @@ export class Resultt<T> {
       onFailure: (earg?: Error) => R,
   ): R {
     if (this.isSuccess()) {
-      if (option.isSome(this._value)) {
-        return onSuccess(this._value.value);
-      }
+      return pipe(
+          this._value,
+          match(
+              () => {
+                return onSuccess();
+              },
+              (t: T) => {
+                return onSuccess(t);
+              },
+          ),
+      );
     }
-    if (option.isSome(this._value) && isError(this._value.value)) {
-      return onFailure(this._value.value);
-    }
-    throw new Error(
-        'Fold cannot apply for the value of this class because of None.',
+    return pipe(
+        this._value,
+        match(
+            () => {
+              return onFailure();
+            },
+            (e: T) => {
+              const err: unknown = e as unknown;
+              return onFailure(err as Error);
+            },
+        ),
     );
   }
 
