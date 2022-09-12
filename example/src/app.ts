@@ -11,7 +11,25 @@ export class App {
         res.forEach((item) => console.log(`Item => ${item}`));
       })
       .onFailure((it) => console.log(`Error caught: ${it}`))
-      .getOrThrow();
+      .fold(
+        (v) => {
+          const items = v ? v.map((item) => {
+            return {
+              id: item.id,
+              state: item.state,
+              title: item.title,
+            };
+          }) : []
+          return {
+            items: items,
+          };
+        },
+        (e) => {
+          return {
+            items: []
+          };
+        }
+      );
 
     console.log(r);
   }
